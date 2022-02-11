@@ -1,5 +1,6 @@
 employees = {'001': {'password': '1234@', 'name':'Luciana'} }
 
+
 def auth_employee():
   id_empl = input('Insira o seu id de Funcionário:') 
   passw = input('Insira a sua senha: ')
