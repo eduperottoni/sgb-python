@@ -10,7 +10,7 @@ dicioario = []
 @app.route('/')
 @app.route('/index')
 def index():
-  return aux_index.show_index()
+  return aux_index.aux_index()
 
 @app.route('/cadastro')
 def cadastro():
