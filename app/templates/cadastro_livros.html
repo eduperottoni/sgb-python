@@ -3,5 +3,12 @@
 
 {%block content%}
 <h2>Página de cadastro</h2>
+
+<form action="/auth_books" method="post">
+  <input type="text" name="livro"/>
+  <input type="text" name="autor">
+  <button type="submit">Cadastrar Livros</button>
+</form>
+
 {% endblock %}
 
