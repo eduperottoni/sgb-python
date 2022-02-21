@@ -1,25 +1,43 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/templates.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
 
-{% block content %}
+  <title>SGB | Login</title>
+</head>
+<body>
+  <div class="container">
+    <main>
+      <h2>Fazer Login como:</h2>
 
-  {% set mensagens = get_flashed_messages() %} <!--Pode ser usado with no lugar de set-->
+      <a class="btn-blue" href="/login/client">
+        <button class="btn btn-blue">Cliente</button>
+      </a>
+
+      <a class="btn-blue" href="/login/employee">
+        <button class="btn btn-blue">Funcionário</button>
+      </a>
+    </main>
+
+    <a class="btn-red" href="/index">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>
+</body>
+
+  <!--Pode ser usado with no lugar de set-->
+  <!-- {% set mensagens = get_flashed_messages() %} 
   {% if mensagens %}
     <div>
       {% for msg in mensagens %}
         <p>{{msg}}</p>
       {% endfor %}
     </div>
-  {% endif %}
+  {% endif %} -->
 
-  <form action="/auth_person" method="post">
-    <label for="user">
-      Name:
-      <input type="text" name="user">
-    </label>
-    <label for="password">
-      Password:
-      <input type="text" name="password">
-    </label>
-    <button type="submit">Fazer login</button>
-  </form>
-{% endblock %}
+  

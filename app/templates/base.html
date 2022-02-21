@@ -1,25 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BIBLIOTECA</title>
+  <title>SGB | {{usertype.title()}}</title>
 
-  <link rel="stylesheet" href=" {{ url_for('static', filename='css/base.css') }} ">
+  <link rel="stylesheet" href=" {{ url_for('static', filename='css/templates.css') }} ">
 </head>
 <body>
+  <h1>BASE</h1>
   <header>
     <nav>
       <ul>
-        <li><a href="/index">Página Inicial</a></li>
-        <li><a href="/register">Cadastro</a></li>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/books">Mostrar livros</a></li>
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/index">Logout</a></li>
       </ul>
     </nav>
-    <img class="profile-pic" src="{{ url_for('static', filename='images/profile-picture.jpg') }}" alt="Teste"/>
   </header>
 
   {% block content %}

@@ -1,6 +1,31 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{%block content%}
-<h2>Hello {{ nome }}, Seja bem vindo</h2>
-<img class="img" src="{{ url_for('static', filename='images/test.png') }}" alt="Testando">
-{% endblock %}
+  <link rel="stylesheet" href="{{url_for('static', filename='css/templates.css')}}">
+  <link rel="stylesheet" href=" {{url_for('static', filename='css/index.css')}} ">
+
+  <title>SGB | Início</title>
+</head>
+<body>
+  <div class="container">
+    <main>
+      <h1>Olá! Seja bem vindo ao SGB</h1>
+      <h3>Sistema de Gerenciamento de Biblioteca</h3>
+  
+      <a class="btn-blue" href="/login">
+        <button class="btn btn-blue">Faça seu Login</button>
+      </a>
+    </main>
+
+    <a class="btn-yellow" href="/show/books/view">
+      <button class="btn btn-yellow">Quero apenas ver os livros disponíveis</button>
+    </a>
+  </div>
+</body>
+</html>
+
+

@@ -1,0 +1,45 @@
+body{
+  padding-top: 1rem;
+}
+
+body > h1,
+section > h2{
+  display: block;
+  text-align:center;
+  margin:0 0 2rem;
+}
+
+div.books{
+  padding:1rem;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:1rem;
+}
+
+div.book{
+  min-width: 250px;
+  background: #055ed3d0;
+  box-shadow: 0 0 10px #4393fb;
+  padding: 0.5rem;
+  border-radius:0.8rem;
+  display: flex;
+  flex-flow: nowrap column;
+  gap:.5rem;
+}
+
+div.books div.book button{
+  cursor: not-allowed;
+}
+
+@media (max-width:840px){
+  div.books{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width:540px){
+  div.books{
+    grid-template-columns: 1fr;
+  }
+}
+
