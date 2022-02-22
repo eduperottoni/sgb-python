@@ -1,11 +1,12 @@
 class DB():
-  def __init__(self, lista_livros, user, usertype):
-    self.lista_livros = lista_livros
+  def __init__(self, books_list=[], user='', usertype='', people_list=[]):
     self.user = user
     self.usertype = usertype
     self.logged = False
+    self.books_list = books_list
+    self.person_list = people_list
   
-  def get_lista_livros(self):
+  def get_books_list(self):
     return self.lista_livros
 
   def set_user(self, user):
@@ -29,8 +30,7 @@ class Livro():
     self.ano = ano
     self.tipo = tipo
 
-
-db = DB([], '', '')
+db = DB()
 
 
 

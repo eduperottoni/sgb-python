@@ -1,10 +1,10 @@
-class Pessoa():
+class Person():
   def __init__(self, name, cpf, birth_date, password):
     self.name = name
     self.cpf = cpf
     self.birth_date = birth_date
     self.password = password
-  
+
   def get_name(self):
     return self.name
 
@@ -13,14 +13,15 @@ class Pessoa():
 
   def get_cpf(self):
     return self.cpf
-  
+
   def set_cpf(self,cpf):
     self.cpf = cpf
 
+#Cliente
+##Estudante
 
+#Funcionário
 
-
-
-eduardo = Pessoa('Eduardo', '03651138089','18/07/2001','edu1234@')
+eduardo = Person('Eduardo', '03651138089','18/07/2001','edu1234@')
 
 print(eduardo.name)

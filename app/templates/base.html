@@ -10,6 +10,7 @@
 </head>
 <body>
   <h1>BASE</h1>
+  {% if usertype == 'client' %}
   <header>
     <nav>
       <ul>
@@ -17,6 +18,17 @@
       </ul>
     </nav>
   </header>
+  {% else %}
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/index">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
+  {% endif %}
+
+  
 
   {% block content %}
 

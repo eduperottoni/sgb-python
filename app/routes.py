@@ -5,7 +5,7 @@ from flask import render_template, request, flash, redirect
 
 from classes.db import db
 
-dicionario = []
+
 #Rota inicial
 @app.route('/')
 @app.route('/index')
@@ -47,10 +47,12 @@ def auth():
   #Fazer a validação de login de cliente abaixo em arquivo separado com as seguintes validações:
   # - VALIDADE DO CPF (Número de caracteres se está no banco)
   # - VALIDADE DA SENHA (Número de caracteres e se está no banco)
-  while user !='admin' and password !='1234@':
+  while user !='admin' and password !='1234@': #while user not in dicionário de clientes do banco:
     if user =='' and password=='':
       flash('Campos vazios :(')
     else:
+      flash('ldfkjhglsdkfjghsldfkgjh')
+      flash('sdflgjksdlfgkjsdh')
       flash('Usuário ou senha inválidos :(')
     # flash('Olá, tudo bem')
     return redirect('/login/client')
@@ -84,6 +86,18 @@ def logout():
   db.set_logged('')
   return redirect('/')
 
+
+#HEADER DO FUNCIONÁRIO:
+### Livros (alteração, criação e delete de livros)
+### Clientes (alterar, criar e deletar clientes)
+### Outros funcionários (alterar, criar, e deletar funcionários --> auth especial de admin)
+### Logout do funcionário
+
+#HEADER DO CLIENTE:
+### Livros no main
+### Devolução (lista de livros do cliente com opção de devolução)
+### Perfil (alterar dados)
+### Logout do cliente
 
 # if user=='03651138089' and password=='1234@':
 #   db.set_user(user)
