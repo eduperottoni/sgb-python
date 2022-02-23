@@ -1,4 +1,6 @@
 #Importação dos métodos do flask
+from email.policy import default
+from jinja2 import Undefined
 from app import app
 from flask import render_template, request, flash, redirect
 #Importação das funções para cada página
@@ -41,7 +43,7 @@ def login_employee():
 
 #Rota de validação de login do cliente
 @app.route('/auth/client', methods=['POST'])
-def auth():
+def auth_client():
   user = request.form.get('user')
   password = request.form.get('password')
   #Fazer a validação de login de cliente abaixo em arquivo separado com as seguintes validações:
@@ -51,8 +53,6 @@ def auth():
     if user =='' and password=='':
       flash('Campos vazios :(')
     else:
-      flash('ldfkjhglsdkfjghsldfkgjh')
-      flash('sdflgjksdlfgkjsdh')
       flash('Usuário ou senha inválidos :(')
     # flash('Olá, tudo bem')
     return redirect('/login/client')
@@ -61,6 +61,27 @@ def auth():
     db.set_user(user)
     db.set_logged(True)
     flash('client')
+    return redirect('/main')
+
+@app.route('/auth/employee', methods=['POST'])
+def auth_employee():
+  user = request.form.get('id-employee')
+  password = request.form.get('password')
+  #Fazer a validação de login de cliente abaixo em arquivo separado com as seguintes validações:
+  # - VALIDADE DO CPF (Número de caracteres se está no banco)
+  # - VALIDADE DA SENHA (Número de caracteres e se está no banco)
+  while user !='admin' and password !='1234@': #while user not in dicionário de clientes do banco:
+    if user =='' and password=='':
+      flash('Campos vazios :(')
+    else:
+      flash('Id de funcionário ou senha inválidos :(')
+    # flash('Olá, tudo bem')
+    return redirect('/login/employee')
+  else:
+    db.set_usertype('employee')
+    db.set_user(user)
+    db.set_logged(True)
+    flash('employee')
     return redirect('/main')
 
 #Rota principal do sistema
@@ -73,10 +94,10 @@ def main():
   else:
     return redirect('/')
 
-#Rota de visualização da lista de livros disponíveis
-@app.route('/show/books/view')
+#Rota de visualização da lista de livros
+@app.route('/books/view')
 def show_books():
-  return render_template('show_books_view.html')
+  return render_template('books_view.html')
 
 #Rota de logout
 @app.route('/logout')
@@ -86,6 +107,46 @@ def logout():
   db.set_logged('')
   return redirect('/')
 
+#Rota de criação de livros
+@app.route('/books')
+def books():
+  user = db.get_user()
+  usertype = db.get_usertype()
+  books_list = db.get_books_list()
+  if db.get_logged():
+    return render_template('books.html', usertype = usertype, books_list=books_list, user=user)
+  else:
+    return redirect('/index')
+
+@app.route('/books/', defaults={'book_id':None})
+@app.route('/books/<book_id>')
+def book_details(book_id):
+  if db.get_logged():
+    if book_id == None or int(book_id) > len(db.get_books_list())-1 :
+      return redirect('/books')
+    else:
+      index = int(book_id)
+      book = db.get_book_from_list(index)
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('book_details.html', book=book, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
+
+@app.route('/books/update/', defaults={'book_id':None})
+@app.route('/books/update/<book_id>')
+def book_update(book_id):
+  if db.get_logged():
+    if book_id == None or int(book_id) > len(db.get_books_list())-1 :
+      return redirect('/books')
+    else:
+      index = int(book_id)
+      book = db.get_book_from_list(index)
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('book_update.html', book=book, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
 
 #HEADER DO FUNCIONÁRIO:
 ### Livros (alteração, criação e delete de livros)

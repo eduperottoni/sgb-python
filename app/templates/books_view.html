@@ -8,11 +8,13 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/templates.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/books.css') }}">
 
-  <title>SGB | Lista de livros</title>
+  <title>SGB | Lista de Livros</title>
 </head>
 <body>
-  <h1>Lista de Livros disponíveis</h1>
-
+  {% block books_options%}
+  
+  {% endblock %}
+  <h1>Lista de Livros</h1>
   <main class="books-list">
     <section class="books-theme">
       <h2>Livros de Assunto</h2>
@@ -24,7 +26,6 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
           </article>
           <button class="btn btn-yellow">Detalhes</button>
-          <button class="btn btn-green">Alugar</button>
         </div>
         <div class="book">
           <h1 class="book-title">Título</h1>
@@ -33,7 +34,6 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
           </article>
           <button class="btn btn-yellow">Detalhes</button>
-          <button class="btn btn-green">Alugar</button>
         </div>
         <div class="book">
           <h1 class="book-title">Título</h1>
@@ -42,7 +42,6 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
           </article>
           <button class="btn btn-yellow">Detalhes</button>
-          <button class="btn btn-green">Alugar</button>
         </div>
         <div class="book">
           <h1 class="book-title">Título</h1>
@@ -51,14 +50,13 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
           </article>
           <button class="btn btn-yellow">Detalhes</button>
-          <button class="btn btn-green">Alugar</button>
         </div>
       </div>
     </section>
   </main>
 
-  <a href="/index" class="btn-red">
-    <button class="btn btn-red">Voltar</button>
-  </a>
+  {% block back%}
+
+  {% endblock %}
 </body>
 </html>

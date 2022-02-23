@@ -6,7 +6,6 @@
 
 html, body{
   width:100%;
-  height:100%;
 }
 
 body{
@@ -36,9 +35,23 @@ a{
   text-decoration:none;
 }
 
-a.btn-red,
-a.btn-yellow{
+a.btn-red.mtop,
+a.btn-yellow.mtop,
+a.btn-blue.mtop{
   margin-top: 5rem;
+}
+
+a.btn-green.mtop-2{
+  margin-top:2rem;
+}
+a.btn-green.mbottom-2{
+  margin-bottom:2rem;
+}
+
+a.btn-red.mbottom,
+a.btn-yellow.mbottom,
+a.btn-blue.mbottom{
+  margin-bottom: 2rem;
 }
 
 div.container{
@@ -48,6 +61,7 @@ div.container{
   align-items: center;
   justify-content: center;
   flex-direction:column;
+  padding-top:10rem;
 }
 
 button.btn{

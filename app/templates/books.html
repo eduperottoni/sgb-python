@@ -1,8 +1,43 @@
-{% block content %}
-  {% for i in data %}
-    <div>{{i}}</div>
-  {% endfor %}
-  <button>
-    <a href="/register">Registrar mais livros</a>
-  </button>
+{% extends 'base.html' %}
+
+{% block books %}
+  {% if usertype == 'employee' %}
+    <nav class="options">
+      <a class="btn-green mtop-2 mbottom-2" href="/book/create">
+        <button class="btn btn-green">Criar livros</button>
+      </a>
+      <a class="btn-green mtop-2 mbottom-2" href="/book/create">
+        <button class="btn btn-green">Criar Gênero</button>
+      </a>
+      <a class="btn-green mtop-2 mbottom-2" href="/book/create">
+        <button class="btn btn-green">Criar Sub-gênero</button>
+      </a>
+    </nav>
+    <div>{{books_list}}</div>
+    <main class="books-list">
+      <section class="books-theme">
+        <h2>Livros de Assunto</h2>
+        <div class="books">
+          {% for i in books_list %}
+            <div class="book">
+              <h1 class="book-title">{{i.get_title()}}</h1>
+              <h4 class="book-author">Autor: {{i.get_author()}}</h4>
+              <article class="book-bio">{{i.get_bio()}}</article>
+              <a href="/books/{{i.get_id()}}" class="btn-yellow">
+                <button class="btn btn-yellow">Detalhes</button>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>  
+  {% else %}
+  {% endif %}
+
+{% endblock %}
+
+{% block back %}
+  <a class="btn-red mtop-2 mbottom-2" href="/main">
+    <button class="btn btn-red">Voltar</button>
+  </a>
 {% endblock %}

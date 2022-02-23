@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block books%}
+  {{book.get_id()}} | {{book.get_title()}}
+  Supergênero: {{book.get_supergener()}}
+  Sub-gênero:{{book.get_subgener()}}
+  Bio: {{book.get_bio()}}
+  Autor: {{book.get_author()}}
+  Ano: {{book.get_year()}}
+  Editora: {{book.get_publish_house()}}
+  Número de páginas: {{book.get_pgs_number()}}
+  Quantidade total: {{book.get_total_amount()}}
+  Quantidade alugada: {{book.get_leased_amount()}}
+  Quantidade disponível: {{book.get_available_amount()}}
+
+  <a href="/books/update/{{book.get_id()}}">Alterar livro</a>
+{% endblock %}

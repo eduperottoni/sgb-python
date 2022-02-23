@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>SGB | Login Cliente</title>
+  <title>SGB | Login Funcionário</title>
 
   <link rel="stylesheet" href="{{ url_for('static',filename='css/templates.css')}}">
   <link rel="stylesheet" href="{{ url_for('static',filename='css/form.css') }}">
@@ -15,20 +15,20 @@
 <body>
   <div class="container">
     <main>
-      <h1>Login de Cliente</h1>
-        {% set messages = get_flashed_messages() %} 
-        {% if messages %}
-          {% for msn in messages %}
+      <h1>Login de Funcionário</h1>
+        {% set flashed = get_flashed_messages() %} 
+        {% if flashed %}
+          {% for msn in flashed %}
             <div class="span-error">
               <p>{{msn}}</p>
             </div>
           {% endfor %}
         {% endif %}
-      <form action="/auth/client" method="post">
-        <label for="user">
-          CPF:
+      <form action="/auth/employee" method="post">
+        <label for="id-employee">
+          ID Funcionário:
           <!-- Fazer validação de user com python -->
-          <input placeholder="Digite seu CPF" type="text" name="user" id="user">
+          <input placeholder="Digite seu ID de funcionário" type="text" name="id-employee" id="id-employee">
         </label>
           <!-- Fazer validação de senha com python -->
         <label for="password">
@@ -38,7 +38,7 @@
         <button class="btn btn-blue" type="submit">Fazer login</button>
       </form>
     </main>
-    <h3>Para se cadastrar, procure um funcionário</h3>
+
     <a href="/login" class="btn-red mtop">
       <button class="btn btn-red">Voltar</button>
     </a>
@@ -46,5 +46,3 @@
 </body>
 </html>
 </html>
-
-
