@@ -31,7 +31,7 @@ class DB():
 
 db = DB()
 
-livro1 = Book(supergener='01',
+livro1 = Book(supergener='G01',
               subgener='Computação',
               title='Introdução à Informática',
               author='Eduardo',
@@ -41,7 +41,7 @@ livro1 = Book(supergener='01',
               pgs_number=230,
               total_amount=10)
 
-livro2 = Book(supergener='01',
+livro2 = Book(supergener='G01',
               subgener='Computação',
               title='Métodos de binários',
               author='Eduardo',
@@ -51,7 +51,7 @@ livro2 = Book(supergener='01',
               pgs_number=230,
               total_amount=10)
 
-livro3 = Book(supergener='01',
+livro3 = Book(supergener='G01',
               subgener='Computação',
               title='Números binários e suas aplicações',
               author='Eduardo',
@@ -62,7 +62,6 @@ livro3 = Book(supergener='01',
               total_amount=10)
 
 
-print(livro2.get_id())
 db.add_books_to_list(livro1)
 db.add_books_to_list(livro2)
 db.add_books_to_list(livro3)

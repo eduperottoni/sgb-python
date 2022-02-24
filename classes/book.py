@@ -1,10 +1,10 @@
-supergener = {'01': 'Técnico',
-              '02': 'Infantil',
-              '03': 'Ficção'}
+supergener = {'G01': 'Técnico',
+              'G02': 'Infantil',
+              'G03': 'Ficção'}
 
-subgener = {'01': ['Computação', 'Cálculo','Física'],
-            '02': ['Contos','Fábulas'],
-            '03': ['Aventura','Mitologia']}
+subgener = {'G01': ['Computação', 'Cálculo','Física'],
+            'G02': ['Contos','Fábulas'],
+            'G03': ['Aventura','Mitologia']}
 
 id_counter = -1
 
