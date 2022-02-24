@@ -40,6 +40,33 @@
       <button onclick="closeMenu()" class="btn btn-blue" style="min-width:100px;">Fechar</button>
     </nav>
   </header>
+  {% elif usertype == 'student' %}
+  <header>
+    <div class="profile">
+      <p><strong>Estudante:</strong> {{user}}</p>
+    </div>
+    <nav class="menu">
+      <ul>
+        <li><a href="/profile">Perfil</a></li>
+        <li><a href="/main">Livros</a></li>
+        <li><a href="/return">Devolução</a></li>
+      </ul>
+    </nav>
+    <div class="buttons">
+      <a href="/index" class="btn-red">
+        <button class="btn btn-red" style="min-width:100px;">Logout</button>
+      </a>
+      <button onclick="openMenu()" class="btn btn-blue" style="min-width:100px;height:45px; margin: auto 0 auto 1rem;">Menu</button>
+    </div>
+    <nav class="hamburguer">
+      <ul>
+        <li><a href="/profile">Perfil</a></li>
+        <li><a href="/main">Livros</a></li>
+        <li><a href="/return">Devolução</a></li>
+      </ul>
+      <button onclick="closeMenu()" class="btn btn-blue" style="min-width:100px;">Fechar</button>
+    </nav>
+  </header>
   {% else %}
   <header>
     <div class="profile">

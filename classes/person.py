@@ -1,4 +1,4 @@
-class Person():
+class Person:
   def __init__(self, name, cpf, birth_date, password):
     self.name = name
     self.cpf = cpf
@@ -7,21 +7,74 @@ class Person():
 
   def get_name(self):
     return self.name
-
-  def set_name(self,name):
-    self.name = name
-
+   
   def get_cpf(self):
     return self.cpf
+  
+  def get_birth_date(self):
+  	return self.birth_date
+  
+  def get_password(self):
+    return self.password
 
-  def set_cpf(self,cpf):
+  def set_name(self, name):
+    self.name = name
+
+  def set_cpf(self, cpf):
     self.cpf = cpf
+    
+  def set_birth_date(self, birth_date):
+  	self.birth_date = birth_date
+  
+  def set_password(self, password):
+    self.password = password
 
-#Cliente
-##Estudante
-
-#Funcionário
-
-eduardo = Person('Eduardo', '03651138089','18/07/2001','edu1234@')
-
-print(eduardo.name)
+class Employee(Person):
+  def __init__(self, name='', cpf='', birth_date='', password='', employee_code=''):
+    Person.__init__(self, name, cpf, birth_date, password)
+    
+    self.employee_code = employee_code
+    
+  def get_employee_code(self):
+    return self.employee_code
+      
+  def set_employee_code(self, employee_code):
+    self.employee_code = employee_code
+    
+class Client(Person):
+  def __init__(self, name='', cpf='', birth_date='', password='', rented=[]):
+    Person.__init__(self, name, cpf, birth_date, password)
+    
+    self.rented = rented
+    self.max_number = 3
+    
+  def get_rented(self):
+    return self.rented
+  
+  def get_max_number(self):
+    return self.max_number
+  	
+  def set_rented(self, rented):
+    self.rented = rented
+    
+  def rent(self, book):
+    self.rented.append(book)
+  
+  def to_return(self, book):
+    self.rented.pop(book)
+    
+class Student(Client):
+  def __init__(self, name='', cpf='', birth_date='', password='', rented=[], student_id_card=''):
+    Client.__init__(self, name, cpf, birth_date, password, rented)
+    
+    self.student_id_card = student_id_card
+    self.max_number = 5
+  
+  def get_student_id_card(self):
+    return self.student_id_card
+  
+  def set_student_id_card(self, student_id_card):
+    self.student_id_card = student_id_card
+    
+  def get_max_number(self):
+    return self.max_number  
