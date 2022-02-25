@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block publishers %}
+  {% set flashed = get_flashed_messages() %} 
+  {% if flashed %}
+    {% for m in flashed %}
+      <div class="span-success">
+        <p>{{m}}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+  <h1>Você realmente deseja deletar a editora {{publisher.get_corp_name()}}?</h1>
+  <a class='btn-blue' href="/publishers">
+    <button class="btn btn-blue">Cancelar</button>
+  </a>
+  <a class="btn-red" href="/publishers/delete/validation/{{publisher.get_id()}}">
+    <button class="btn btn-red">Deletar</button>
+  </a>
+{% endblock %}

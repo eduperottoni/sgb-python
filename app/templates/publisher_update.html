@@ -2,15 +2,15 @@
 {% block publishers %}
   {% set flashed = get_flashed_messages() %} 
   {% if flashed %}
-    {% for msn in flashed %}
-      <div class="span-error">
-        <p>{{msn}}</p>
+    {% for m in flashed %}
+      <div class="span-success">
+        <p>{{m}}</p>
       </div>
     {% endfor %}
   {% endif %}
-  <form action="/publishers/update/validation" method="post">
+  <form action="/publishers/update/validation/{{publisher.get_id()}}" method="post">
     <label for="id">
-      <input type="text" value="{{publisher.get_id()}}" id="id" name="id">
+      <input type="text" value="{{publisher.get_id()}}" id="id" name="id" disabled>
     </label>
     <label for="corp-name">
       <input type="text" value="{{publisher.get_corp_name()}}" id="corp-name" name="corp-name">

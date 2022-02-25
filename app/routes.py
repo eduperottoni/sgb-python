@@ -1,11 +1,12 @@
 #Importação dos métodos do flask
-from email.policy import default
-from jinja2 import Undefined
 from app import app
 from flask import render_template, request, flash, redirect
 #Importação das funções para cada página
 from classes.db import db
 from app.utils.validations.publisher_update_validation import publisher_update_validation
+from app.utils.validations.publisher_delete_validation import publisher_delete_validation
+from app.utils.validations.publisher_create_validation import publisher_create_validation
+from app.utils.creations.create_publisher import create_publisher
 from app.utils.validations.employee_auth_validation import employee_auth_validation
 #Rota inicial
 @app.route('/')
@@ -210,9 +211,32 @@ def publishers():
   else:
     return redirect('/')
 
+@app.route('/publishers/create')
+def publishers_create():
+  user = db.get_user()
+  usertype = db.get_usertype()
+  if (db.get_logged()):
+    return render_template('publisher_create.html', usertype=usertype, user=user)
+  else:
+    return redirect('/')
+
+@app.route('/publishers/create/validation/', methods=['POST'])
+def publishers_create_validation():
+  corp_name = request.form.get('corp-name')
+  phone = request.form.get('phone')
+  validation_dict = publisher_create_validation(corp_name, phone)
+  while validation_dict['valid'] == False:
+    flash(validation_dict['message'])
+    return redirect('/publishers/create')
+  else:
+    create_publisher(corp_name, phone)
+    flash('Editora criada')
+    return redirect('/publishers')
+
+
 @app.route('/publishers/update/', defaults={'publisher_id':None})
 @app.route('/publishers/update/<publisher_id>')
-def publisher_update(publisher_id):
+def publishers_update(publisher_id):
   if db.get_logged():
     if publisher_id == None or int(publisher_id) > len(db.get_publishers_list())-1 :
       return redirect('/publishers')
@@ -225,23 +249,49 @@ def publisher_update(publisher_id):
   else:
     return redirect('/index')
 
-@app.route('/publishers/update/validation', methods=['POST'])
-def publishers_update_validation():
-  id = request.form.get('id')
+@app.route('/publishers/update/validation/', defaults={'publisher_id':None})
+@app.route('/publishers/update/validation/<publisher_id>', methods=['POST'])
+def publishers_update_validation(publisher_id):
   corp_name = request.form.get('corp-name')
   phone = request.form.get('phone')
   publishers_list = db.get_publishers_list()
-  validation_dict = publisher_update_validation(id, corp_name, phone)
+  validation_dict = publisher_update_validation(publisher_id, corp_name, phone)
   while validation_dict['valid'] == False: #while user not in dicionário de clientes do banco:
     flash(validation_dict['message'])
-    return redirect(f'/publishers/update/{id}')
+    return redirect(f'/publishers/update/{publisher_id}')
   else:
-    publishers_list[int(id)].set_corp_name(corp_name)
-    publishers_list[int(id)].set_phone(phone)
+    publishers_list[int(publisher_id)].set_corp_name(corp_name)
+    publishers_list[int(publisher_id)].set_phone(phone)
     flash('Editora modificada')
     return redirect('/publishers')
     
+@app.route('/publishers/delete/', defaults={'publisher_id':None})
+@app.route('/publishers/delete/<publisher_id>')
+def publisher_delete(publisher_id):
+  if db.get_logged():
+    if publisher_id == None or int(publisher_id) > len(db.get_publishers_list())-1 :
+      return redirect('/publishers')
+    else:
+      index = int(publisher_id)
+      publisher = db.get_publisher_from_list(index)
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('publisher_delete.html', publisher=publisher, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
 
+@app.route('/publishers/delete/validation/', defaults={'publisher_id':None})
+@app.route('/publishers/delete/validation/<publisher_id>')
+def publishers_delete_validation(publisher_id):
+  publishers_list = db.get_publishers_list()
+  validation_dict = publisher_delete_validation(int(publisher_id))
+  while validation_dict['valid'] == False:
+    flash(validation_dict['message'])
+    return redirect(f'/publishers/delete/{publisher_id}')
+  else:
+    publishers_list[int(publisher_id)] = ''
+    flash('Editora excluída')
+    return redirect('/publishers')
 
 #HEADER DO FUNCIONÁRIO:
 ### Livros (alteração, criação e delete de livros)

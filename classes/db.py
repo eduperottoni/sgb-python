@@ -85,7 +85,7 @@ livro3 = Book(supergener='G01',
               title='Números binários e suas aplicações',
               author='Eduardo',
               year=2020,
-              publisher=editora3,
+              publisher=editora2,
               bio='Livro com uma Introdução aos conceitos fundamentais de informática',
               pgs_number=230,
               total_amount=10)
