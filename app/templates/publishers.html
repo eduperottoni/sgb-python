@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block publishers %}
+  {% set flashed = get_flashed_messages() %} 
+  {% if flashed %}
+    {% for msn in flashed %}
+      <div class="span-error">
+        <p>{{msn}}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+  <main class="books-list">
+    <section class="books-theme">
+      <h2>Editoras parceiras</h2>
+      <div class="books">
+      {% for i in publishers_list %}
+        <div class="book">
+          <h2 class="book-title">{{i.get_corp_name()}}</h2>
+          <hr>
+          <h4 class="book-author">Telefone: {{i.get_phone()}}</h4>
+          <hr>
+          <a href="/publishers/update/{{i.get_id()}}" class="mtop-2 btn-yellow">
+            <button class="btn btn-yellow">Alterar</button>
+          </a>
+          <a href="/publishers/remove/{{i.get_id()}}" class="mtop-2 btn-red">
+            <button class="btn btn-red">Deletar</button>
+          </a>
+        </div>
+      {% endfor %}
+      </div>
+  </main>
+{% endblock %}

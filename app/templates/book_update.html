@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
 {% block clients %}
-  Alteração de dados do livro
+  <h1>Alteração | Livro {{book.get_id()}}</h1>
+  <form action="/books/update/validation" method="post">
+    
+  </form>
 {% endblock %}

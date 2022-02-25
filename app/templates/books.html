@@ -3,13 +3,13 @@
 {% block books %}
   {% if usertype == 'employee' %}
     <nav class="options">
-      <a class="btn-green mtop-2 mbottom-2" href="/book/create">
-        <button class="btn btn-green">Criar livros</button>
+      <a class="btn-green mtop-2 mbottom-2" href="/books/create">
+        <button class="btn btn-green">Criar livro</button>
       </a>
-      <a class="btn-green mtop-2 mbottom-2" href="/book/create">
+      <a class="btn-green mtop-2 mbottom-2" href="/books/create">
         <button class="btn btn-green">Criar Gênero</button>
       </a>
-      <a class="btn-green mtop-2 mbottom-2" href="/book/create">
+      <a class="btn-green mtop-2 mbottom-2" href="/books/create">
         <button class="btn btn-green">Criar Sub-gênero</button>
       </a>
     </nav>
@@ -20,10 +20,12 @@
         <div class="books">
           {% for i in books_list %}
             <div class="book">
-              <h1 class="book-title">{{i.get_title()}}</h1>
+              <h2 class="book-title">{{i.get_title()}}</h2>
+              <hr>
               <h4 class="book-author">Autor: {{i.get_author()}}</h4>
+              <hr>
               <article class="book-bio">{{i.get_bio()}}</article>
-              <a href="/books/{{i.get_id()}}" class="btn-yellow">
+              <a href="/books/{{i.get_id()}}" class="mtop-2 btn-yellow">
                 <button class="btn btn-yellow">Detalhes</button>
               </a>
             </div>
@@ -37,7 +39,7 @@
 {% endblock %}
 
 {% block back %}
-  <a class="btn-red mtop-2 mbottom-2" href="/main">
+  <a class="btn-red mtop mbottom-2" href="/main">
     <button class="btn btn-red">Voltar</button>
   </a>
 {% endblock %}

@@ -41,7 +41,8 @@ a.btn-blue.mtop{
   margin-top: 5rem;
 }
 
-a.btn-green.mtop-2{
+a.btn-green.mtop-2,
+a.btn-yellow.mtop-2{
   margin-top:2rem;
 }
 a.btn-green.mbottom-2{
@@ -101,6 +102,10 @@ button.btn-green{
 button.btn:hover{
   box-shadow:none;
   color: #fff;
+}
+
+button.off{
+  cursor: not-allowed;
 }
 
 div.span-error{
