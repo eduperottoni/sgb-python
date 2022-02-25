@@ -2,12 +2,12 @@ from classes.book import Book
 from classes.person import Student, Client, Employee
 
 class DB():
-  def __init__(self, books_list=[], user='', usertype='', people_list=[]):
+  def __init__(self, books_list=[], user='', usertype='', people_dict={}):
     self.user = user
     self.usertype = usertype
     self.logged = False
     self.books_list = books_list
-    self.people_list = people_list
+    self.people_dict = {'clients': [], 'students': [], 'employees': []}
   
   def get_books_list(self):
     return self.books_list
@@ -16,17 +16,15 @@ class DB():
   def get_book_from_list(self, index):
     return self.books_list[index]
     
-  def get_people_list(self):
-    return self.people_list
-  def get_cpf_people_list(self):
-    if (len(self.people_list) == 0):
+  # esse ERROR é para quando alguém tentar se autenticar, mas ainda não existir ngm cadastrado  
+  def get_people_dict(self):
+    if (len(self.people_dict) == 0):
       return "ERROR"
     else:
-      return self.people_list
+      return self.people_dict
 
-  #talvez aqui teria que ser uma lista de dicionários, para poder gravar de qual tipo a pessoa é
-  def add_people_to_list(self, person, t):
-    self.people_list.append({t:person})
+  def add_people_to_dict(self, person, t):
+    self.people_dict[t].append(person)
 
   def set_user(self, user):
     self.user = user

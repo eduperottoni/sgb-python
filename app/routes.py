@@ -61,14 +61,13 @@ def auth_client():
     flash('Campo(s) vazios :(')
     return redirect('/login/client')
       
-  for i in db.get_cpf_people_list():
-    if 'client' in i.keys():
-      if user == i['client'].get_cpf() and password == i['client'].get_password(): 
-        db.set_usertype('client')
-        db.set_user(i['client'].get_name())
-        db.set_logged(True)
-        flash('client')
-        return redirect('/main')
+  for i in db.get_people_dict()['clients']:
+    if user == i.get_cpf() and password == i.get_password(): 
+      db.set_usertype('client')
+      db.set_user(i['client'].get_name())
+      db.set_logged(True)
+      flash('client')
+      return redirect('/main')
 
   flash('Usuário ou senha inválidos :(')
   return redirect('/login/client')
@@ -84,14 +83,13 @@ def auth_student():
     flash('Campo(s) vazios :(')
     return redirect('/login/student')
       
-  for i in db.get_cpf_people_list():
-    if 'student' in i.keys():
-      if user == i['student'].get_cpf() and password == i['student'].get_password(): 
-        db.set_usertype('student')
-        db.set_user(i['student'].get_name())
-        db.set_logged(True)
-        flash('student')
-        return redirect('/main')
+  for i in db.get_people_dict()['students']:
+    if user == i.get_cpf() and password == i.get_password(): 
+      db.set_usertype('student')
+      db.set_user(i.get_name())
+      db.set_logged(True)
+      flash('student')
+      return redirect('/main')
 
   flash('Usuário ou senha inválidos :(')
   return redirect('/login/student')   
@@ -107,14 +105,13 @@ def auth_employee():
     flash('Campo(s) vazios :(')
     return redirect('/login/employee')
   
-  for i in db.get_cpf_people_list():
-    if 'employee' in i.keys():
-      if user == i['employee'].get_employee_code() and password == i['employee'].get_password(): 
-        db.set_usertype('employee')
-        db.set_user(i['employee'].get_name())
-        db.set_logged(True)
-        flash('employee')
-        return redirect('/main')
+  for i in db.get_people_dict()['employee']:
+    if user == i.get_employee_code() and password == i.get_password(): 
+      db.set_usertype('employee')
+      db.set_user(i.get_name())
+      db.set_logged(True)
+      flash('employee')
+      return redirect('/main')
 
   flash('Id de funcionário ou senha inválidos :(')
   return redirect('/login/employee')

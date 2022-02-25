@@ -11,8 +11,7 @@ class Person:
   def get_cpf(self):
     return self.cpf
   
-  def get_birth_date(self):
-  	return self.birth_date
+  def get_birth_date(self): return self.birth_date
   
   def get_password(self):
     return self.password
@@ -42,10 +41,10 @@ class Employee(Person):
     self.employee_code = employee_code
     
 class Client(Person):
-  def __init__(self, name='', cpf='', birth_date='', password='', rented=[]):
+  def __init__(self, name='', cpf='', birth_date='', password=''):
     Person.__init__(self, name, cpf, birth_date, password)
     
-    self.rented = rented
+    self.rented = []
     self.max_number = 3
     
   def get_rented(self):
@@ -56,16 +55,17 @@ class Client(Person):
   	
   def set_rented(self, rented):
     self.rented = rented
-    
+   
+  # book é um objeto 
   def rent(self, book):
     self.rented.append(book)
   
   def to_return(self, book):
-    self.rented.pop(book)
+    self.rented.remove(book)
     
 class Student(Client):
-  def __init__(self, name='', cpf='', birth_date='', password='', rented=[], student_id_card=''):
-    Client.__init__(self, name, cpf, birth_date, password, rented)
+  def __init__(self, name='', cpf='', birth_date='', password='', student_id_card=''):
+    Client.__init__(self, name, cpf, birth_date, password)
     
     self.student_id_card = student_id_card
     self.max_number = 5
@@ -73,8 +73,10 @@ class Student(Client):
   def get_student_id_card(self):
     return self.student_id_card
   
+  def get_max_number(self):
+    return self.max_number
+  
   def set_student_id_card(self, student_id_card):
     self.student_id_card = student_id_card
     
-  def get_max_number(self):
-    return self.max_number  
+    
