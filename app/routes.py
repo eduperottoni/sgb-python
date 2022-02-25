@@ -4,11 +4,9 @@ from jinja2 import Undefined
 from app import app
 from flask import render_template, request, flash, redirect
 #Importação das funções para cada página
-
 from classes.db import db
 from app.utils.validations.publisher_update_validation import publisher_update_validation
-from classes.person import Person
-
+from app.utils.validations.employee_auth_validation import employee_auth_validation
 #Rota inicial
 @app.route('/')
 @app.route('/index')
@@ -106,7 +104,7 @@ def auth_employee():
     flash('Campo(s) vazios :(')
     return redirect('/login/employee')
   
-  for i in db.get_people_dict()['employee']:
+  for i in db.get_people_dict()['employees']:
     if user == i.get_employee_code() and password == i.get_password(): 
       db.set_usertype('employee')
       db.set_user(i.get_name())
@@ -121,9 +119,10 @@ def auth_employee():
 @app.route('/main')
 def main():
   user = db.get_user()
+  username = db.get_username()
   usertype = db.get_usertype()
   if(db.get_logged()):
-    return render_template('main.html', user=user, usertype=usertype)
+    return render_template('main.html', user=user, usertype=usertype, username=username)
   else:
     return redirect('/')
 
@@ -233,14 +232,15 @@ def publishers_update_validation():
   phone = request.form.get('phone')
   publishers_list = db.get_publishers_list()
   validation_dict = publisher_update_validation(id, corp_name, phone)
-  while validation_dict['valid']: #while user not in dicionário de clientes do banco:
+  while validation_dict['valid'] == False: #while user not in dicionário de clientes do banco:
+    flash(validation_dict['message'])
+    return redirect(f'/publishers/update/{id}')
+  else:
     publishers_list[int(id)].set_corp_name(corp_name)
     publishers_list[int(id)].set_phone(phone)
     flash('Editora modificada')
     return redirect('/publishers')
-  else:
-    flash(validation_dict['message'])
-    return redirect(f'/publishers/update/{id}')
+    
 
 
 #HEADER DO FUNCIONÁRIO:
