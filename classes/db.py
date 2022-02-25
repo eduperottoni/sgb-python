@@ -3,8 +3,9 @@ from classes.publisher import Publisher
 from classes.person import Student, Client, Employee
 
 class DB():
-  def __init__(self, books_list=[], user='', usertype='', people_dict={}, publishers_list=[]):
+  def __init__(self, books_list=[], user='', username='', usertype='', people_dict={}, publishers_list=[]):
     self.user = user
+    self.username = username
     self.usertype = usertype
     self.logged = False
     self.books_list = books_list
@@ -40,6 +41,9 @@ class DB():
   def get_user(self):
     return self.user
   
+  def get_username(self) : return self.username
+  def set_username(self, username): self.username = username
+
   def set_usertype(self, usertype):
     self.usertype = usertype
   def get_usertype(self):
@@ -130,9 +134,9 @@ funcionario2 = Employee(name='Tiago',
                employee_code='00002')
                
                
-db.add_people_to_list(estudante1, 'student')               
-db.add_people_to_list(estudante2, 'student')               
-db.add_people_to_list(cliente1, 'client')               
-db.add_people_to_list(cliente2, 'client')               
-db.add_people_to_list(funcionario1, 'employee')               
-db.add_people_to_list(funcionario2, 'employee')               
+db.add_people_to_dict(estudante1, 'students')               
+db.add_people_to_dict(estudante2, 'students')               
+db.add_people_to_dict(cliente1, 'clients')               
+db.add_people_to_dict(cliente2, 'clients')               
+db.add_people_to_dict(funcionario1, 'employees')               
+db.add_people_to_dict(funcionario2, 'employees')               
