@@ -28,8 +28,16 @@ div.book{
   gap:.5rem;
 }
 
-div.books div.book button{
-  cursor: not-allowed;
+div.book h2{
+  min-height: 64px;
+}
+
+div.book hr{
+  background:#4393fbee;
+  height: 2px;
+  width:50%;
+  margin: 0 auto;
+  border:none;
 }
 
 @media (max-width:840px){

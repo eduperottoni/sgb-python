@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block publishers %}
+  {% set flashed = get_flashed_messages() %} 
+  {% if flashed %}
+    {% for msn in flashed %}
+      <div class="span-error">
+        <p>{{msn}}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+  <form action="/publishers/update/validation" method="post">
+    <label for="id">
+      <input type="text" value="{{publisher.get_id()}}" id="id" name="id">
+    </label>
+    <label for="corp-name">
+      <input type="text" value="{{publisher.get_corp_name()}}" id="corp-name" name="corp-name">
+    </label>
+    <label for="phone">
+      <input type="text" value="{{publisher.get_phone()}}" id="phone" name="phone">
+    </label>
+    <button class="btn btn-green" type="submit">Atualizar</button>
+  </form>
+{% endblock %}

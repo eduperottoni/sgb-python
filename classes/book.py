@@ -1,3 +1,4 @@
+#Ver necessidade de matriz no trabalho
 supergener = {'G01': 'Técnico',
               'G02': 'Infantil',
               'G03': 'Ficção'}
@@ -18,7 +19,7 @@ class Book:
                      title='', 
                      author='', 
                      year=0, 
-                     publish_house='', 
+                     publisher='', 
                      bio='', 
                      pgs_number=0, 
                      total_amount=0):
@@ -29,7 +30,7 @@ class Book:
     self.title = title
     self.author = author
     self.year = year
-    self.publish_house = publish_house
+    self.publisher = publisher
     self.bio = bio
     self.pgs_number = pgs_number
     self.total_amount = total_amount
@@ -41,7 +42,7 @@ class Book:
   def get_title(self) : return self.title
   def get_author(self): return self.author
   def get_year(self): return self.year
-  def get_publish_house(self): return self.publish_house
+  def get_publisher(self): return self.publisher
   def get_bio(self): return self.bio
   def get_pgs_number(self): return self.pgs_number
   def get_total_amount(self): return self.total_amount
@@ -53,7 +54,7 @@ class Book:
   def set_title(self, title) : self.title = title
   def set_author(self, author): self.author = author
   def set_year(self, year): self.year = year
-  def set_publish_house(self, publish_house): self.publish_house = publish_house
+  def set_publisher(self, publisher): self.publisher = publisher
   def set_bio(self, bio): self.bio = bio
   def set_pgs_number(self, bio): self.pgs_number = bio
   def set_total_amount(self, total_amount): self.total_amount = total_amount

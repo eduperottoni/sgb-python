@@ -6,6 +6,7 @@ from flask import render_template, request, flash, redirect
 #Importação das funções para cada página
 
 from classes.db import db
+from app.utils.validations.publisher_update_validation import publisher_update_validation
 from classes.person import Person
 
 #Rota inicial
@@ -179,6 +180,68 @@ def book_update(book_id):
       return render_template('book_update.html', book=book, usertype=usertype, user=user)
   else:
     return redirect('/index')
+
+@app.route('/books/update/validation', methods=['POST'])
+def book_update_validation():
+  title = request.form.get('id-employee')
+  password = request.form.get('password')
+  #Fazer a validação de login de cliente abaixo em arquivo separado com as seguintes validações:
+  
+  # while user !='admin' and password !='1234@': #while user not in dicionário de clientes do banco:
+  #   if user =='' and password=='':
+  #     flash('Campos vazios :(')
+  #   else:
+  #     flash('Id de funcionário ou senha inválidos :(')
+  #   # flash('Olá, tudo bem')
+  #   return redirect('/login/employee')
+  # else:
+  #   db.set_usertype('employee')
+  #   db.set_user(user)
+  #   db.set_logged(True)
+  #   flash('employee')
+  #   return redirect('/main')
+
+@app.route('/publishers')
+def publishers():
+  publishers_list = db.get_publishers_list()
+  user = db.get_user()
+  usertype = db.get_usertype()
+  if (db.get_logged()):
+    return render_template('publishers.html', publishers_list = publishers_list, usertype=usertype, user=user)
+  else:
+    return redirect('/')
+
+@app.route('/publishers/update/', defaults={'publisher_id':None})
+@app.route('/publishers/update/<publisher_id>')
+def publisher_update(publisher_id):
+  if db.get_logged():
+    if publisher_id == None or int(publisher_id) > len(db.get_publishers_list())-1 :
+      return redirect('/publishers')
+    else:
+      index = int(publisher_id)
+      publisher = db.get_publisher_from_list(index)
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('publisher_update.html', publisher=publisher, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
+
+@app.route('/publishers/update/validation', methods=['POST'])
+def publishers_update_validation():
+  id = request.form.get('id')
+  corp_name = request.form.get('corp-name')
+  phone = request.form.get('phone')
+  publishers_list = db.get_publishers_list()
+  validation_dict = publisher_update_validation(id, corp_name, phone)
+  while validation_dict['valid']: #while user not in dicionário de clientes do banco:
+    publishers_list[int(id)].set_corp_name(corp_name)
+    publishers_list[int(id)].set_phone(phone)
+    flash('Editora modificada')
+    return redirect('/publishers')
+  else:
+    flash(validation_dict['message'])
+    return redirect(f'/publishers/update/{id}')
+
 
 #HEADER DO FUNCIONÁRIO:
 ### Livros (alteração, criação e delete de livros)
