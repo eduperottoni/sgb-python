@@ -3,7 +3,7 @@
   {% set flashed = get_flashed_messages() %} 
   {% if flashed %}
     {% for m in flashed %}
-      <div class="span-success">
+      <div class="span-error">
         <p>{{m}}</p>
       </div>
     {% endfor %}

@@ -11,9 +11,12 @@ def publisher_update_validation(id, corp_name, phone):
           repeated_name = True
         if publisher.phone == phone:
           repeated_phone = False
+  for i in phone:
+    if not i.isdigit():
+      return {'valid':False, 'message':'Telefone deve conter apenas números'}
   if (len(corp_name.strip()) < 3) or repeated_name:
     return {'valid':False, 'message':'Nome de editora inválido :('}
-  elif (len(phone.strip()) < 8) or repeated_phone:
+  elif (len(phone.strip()) not in [10,11]) or repeated_phone:
     return {'valid':False, 'message':'Telefone inválido :('}
   else:
     return {'valid':True, 'message':''}

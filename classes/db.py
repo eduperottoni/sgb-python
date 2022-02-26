@@ -56,9 +56,9 @@ class DB():
 
 db = DB()
 
-editora1 = Publisher('Casa do Código', '54 58624518')
-editora2 = Publisher('Editora UFSC', '54 92561185')
-editora3 = Publisher('Editora POOI', '54 32569588')
+editora1 = Publisher('Casa do Código', '5458624518')
+editora2 = Publisher('Editora UFSC', '5492561185')
+editora3 = Publisher('Editora POOI', '5432569588')
 
 livro1 = Book(supergener='G01',
               subgener='Computação',
