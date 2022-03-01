@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block books %}
+  {% for subgenre in subgenres %}
+    <a class='btn-blue' href="/books/create/{{supergenre}}/{{subgenres.index(subgenre)}}">
+      <button class="btn btn-blue">{{subgenre}}</button>
+    </a>
+  {% endfor %}
+{% endblock %}

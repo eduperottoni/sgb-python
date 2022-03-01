@@ -60,8 +60,8 @@ editora1 = Publisher('Casa do Código', '5458624518')
 editora2 = Publisher('Editora UFSC', '5492561185')
 editora3 = Publisher('Editora POOI', '5432569588')
 
-livro1 = Book(supergener='G01',
-              subgener='Computação',
+livro1 = Book(supergenre='G001',
+              subgenre='Computação',
               title='Introdução à Informática',
               author='Eduardo',
               year=2020,
@@ -70,8 +70,8 @@ livro1 = Book(supergener='G01',
               pgs_number=230,
               total_amount=10)
 
-livro2 = Book(supergener='G01',
-              subgener='Computação',
+livro2 = Book(supergenre='G001',
+              subgenre='Computação',
               title='Métodos de binários',
               author='Eduardo',
               year=2020,
@@ -80,8 +80,8 @@ livro2 = Book(supergener='G01',
               pgs_number=230,
               total_amount=10)
 
-livro3 = Book(supergener='G01',
-              subgener='Computação',
+livro3 = Book(supergenre='G001',
+              subgenre='Computação',
               title='Números binários e suas aplicações',
               author='Eduardo',
               year=2020,

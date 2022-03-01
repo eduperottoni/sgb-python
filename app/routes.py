@@ -1,12 +1,16 @@
 #Importação dos métodos do flask
+from contextlib import redirect_stderr
 from app import app
 from flask import render_template, request, flash, redirect
 #Importação das funções para cada página
 from classes.db import db
+from classes.book import supergenres, subgenres
 from app.utils.validations.publisher_update_validation import publisher_update_validation
 from app.utils.validations.publisher_delete_validation import publisher_delete_validation
 from app.utils.validations.publisher_create_validation import publisher_create_validation
 from app.utils.creations.create_publisher import create_publisher
+from app.utils.validations.supergenre_create_validation import supergenre_create_validation
+from app.utils.creations.create_supergenre import create_supergenre
 from app.utils.validations.employee_auth_validation import employee_auth_validation
 #Rota inicial
 @app.route('/')
@@ -166,6 +170,81 @@ def book_details(book_id):
   else:
     return redirect('/index')
 
+@app.route('/books/create')
+def books_create_supergenre():
+  if db.get_logged():
+    usertype = db.get_usertype()
+    user = db.get_user()
+    return render_template('book_create_supergenre.html', supergenres=supergenres, usertype=usertype, user=user)
+  else:
+    return redirect('/')
+
+@app.route('/books/create', defaults={'supergenre':None})
+@app.route('/books/create/<supergenre>')
+def books_create_subgenre(supergenre):
+  if db.get_logged():
+    if supergenre == None or supergenre not in supergenres.keys():
+      return redirect('/books/create')
+    else:
+      subgenres_list = subgenres[supergenre]
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('book_create_subgenre.html', supergenre=supergenre, subgenres=subgenres_list, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
+
+@app.route('/books/create', defaults={'supergenre':None, 'subgenre_index':None})
+@app.route('/books/create/<supergenre>/<subgenre_index>')
+def books_create_form(supergenre, subgenre_index):
+  subgenre_index = int(subgenre_index)
+  if db.get_logged():
+    is_valid = True
+    if supergenre == None or supergenre not in supergenres.keys():
+      is_valid = False
+    else:
+      if subgenre_index not in range (0,len(subgenres[supergenre])):
+        is_valid = False
+    
+    if is_valid:
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('book_create_form.html', supergenre=supergenre, subgenre=subgenres[supergenre][subgenre_index], usertype=usertype, user=user)
+    else:
+      return redirect('/books/create')
+  else:
+    return redirect('/index')
+
+@app.route('/supergenre/create')
+def supergenre_create():
+  if db.get_logged():
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('supergenre_create.html', supergenres=supergenres, subgenres=subgenres, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
+
+@app.route('/supergenre/create/validation', methods=['POST'])
+def supergenres_create_validation():
+  if db.get_logged():
+    supergenre = request.form.get('supergenre').title()
+    subgenre = request.form.get('subgenre').title()
+    validation_dict = supergenre_create_validation(supergenre, subgenre)
+    while validation_dict['valid'] == False:
+      flash(validation_dict['message'])
+      return redirect('/supergenre/create')
+    else:
+      create_supergenre(supergenre, subgenre)
+      flash(validation_dict['message'])
+      return redirect('/books')
+  else:
+    return redirect('/')
+#   user = db.get_user()
+#   usertype = db.get_usertype()
+#   if (db.get_logged()):
+#     return render_template('publisher_create.html', usertype=usertype, user=user)
+#   else:
+#     return redirect('/')
+
 @app.route('/books/update/', defaults={'book_id':None})
 @app.route('/books/update/<book_id>')
 def book_update(book_id):
@@ -220,18 +299,21 @@ def publishers_create():
   else:
     return redirect('/')
 
-@app.route('/publishers/create/validation/', methods=['POST'])
+@app.route('/publishers/create/validation', methods=['POST'])
 def publishers_create_validation():
-  corp_name = request.form.get('corp-name')
-  phone = request.form.get('phone')
-  validation_dict = publisher_create_validation(corp_name, phone)
-  while validation_dict['valid'] == False:
-    flash(validation_dict['message'])
-    return redirect('/publishers/create')
+  if db.get_logged():
+    corp_name = request.form.get('corp-name')
+    phone = request.form.get('phone')
+    validation_dict = publisher_create_validation(corp_name, phone)
+    while validation_dict['valid'] == False:
+      flash(validation_dict['message'])
+      return redirect('/publishers/create')
+    else:
+      create_publisher(corp_name, phone)
+      flash('Editora criada')
+      return redirect('/publishers')
   else:
-    create_publisher(corp_name, phone)
-    flash('Editora criada')
-    return redirect('/publishers')
+    return redirect('/')
 
 
 @app.route('/publishers/update/', defaults={'publisher_id':None})
@@ -292,6 +374,8 @@ def publishers_delete_validation(publisher_id):
     publishers_list[int(publisher_id)] = ''
     flash('Editora excluída')
     return redirect('/publishers')
+
+
 
 #HEADER DO FUNCIONÁRIO:
 ### Livros (alteração, criação e delete de livros)

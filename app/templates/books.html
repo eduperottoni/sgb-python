@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
 
 {% block books %}
+  {% set flashed = get_flashed_messages() %} 
+  {% if flashed %}
+    {% for msn in flashed %}
+      <div class="span-success">
+        <p>{{msn}}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
   {% if usertype == 'employee' %}
     <nav class="options">
       <a class="btn-green mtop-2 mbottom-2" href="/books/create">
         <button class="btn btn-green">Criar livro</button>
       </a>
-      <a class="btn-green mtop-2 mbottom-2" href="/books/create">
+      <a class="btn-green mtop-2 mbottom-2" href="/supergenre/create">
         <button class="btn btn-green">Criar Gênero</button>
       </a>
-      <a class="btn-green mtop-2 mbottom-2" href="/books/create">
+      <a class="btn-green mtop-2 mbottom-2" href="/subgenre/create">
         <button class="btn btn-green">Criar Sub-gênero</button>
       </a>
     </nav>

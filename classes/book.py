@@ -1,11 +1,21 @@
 #Ver necessidade de matriz no trabalho
-supergener = {'G01': 'Técnico',
-              'G02': 'Infantil',
-              'G03': 'Ficção'}
+def supergenre_id_generator():
+  len_list_supergenres = len(supergenres)
+  next_number = len_list_supergenres + 1
+  if next_number <= 9:
+    return(f'G00{next_number}')
+  elif next_number <= 99:
+    return(f'G0{next_number}')
+  elif next_number >99:
+    return(f'G{next_number}')
 
-subgener = {'G01': ['Computação', 'Cálculo','Física'],
-            'G02': ['Contos','Fábulas'],
-            'G03': ['Aventura','Mitologia']}
+supergenres = {'G001': 'Técnico',
+              'G002': 'Infantil',
+              'G003': 'Ficção'}
+
+subgenres = {'G001': ['Computação', 'Cálculo','Física'],
+            'G002': ['Contos','Fábulas'],
+            'G003': ['Aventura','Mitologia']}
 
 id_counter = -1
 
@@ -14,8 +24,8 @@ def id_generator():
   id_counter += 1
   return id_counter
 class Book:
-  def __init__(self, supergener = '',
-                     subgener = '',
+  def __init__(self, supergenre = '',
+                     subgenre = '',
                      title='', 
                      author='', 
                      year=0, 
@@ -25,8 +35,8 @@ class Book:
                      total_amount=0):
 
     self.id = id_generator()
-    self.supergener = supergener
-    self.subgener = subgener
+    self.supergenre = supergenre
+    self.subgenre = subgenre
     self.title = title
     self.author = author
     self.year = year
@@ -37,8 +47,8 @@ class Book:
     self.leased_amount = 0
   
   def get_id(self) : return self.id
-  def get_supergener(self): return self.supergener
-  def get_subgener(self): return self.subgener
+  def get_supergenre(self): return self.supergenre
+  def get_subgenre(self): return self.subgenre
   def get_title(self) : return self.title
   def get_author(self): return self.author
   def get_year(self): return self.year
@@ -49,8 +59,8 @@ class Book:
   def get_leased_amount(self): return self.leased_amount
 
   def set_id(self, id) : self.id = id
-  def set_supergener(self, supergener): self.supergener = supergener
-  def set_subgener(self, subgener): self.subgener = subgener
+  def set_supergenre(self, supergenre): self.supergenre = supergenre
+  def set_subgenre(self, subgenre): self.subgenre = subgenre
   def set_title(self, title) : self.title = title
   def set_author(self, author): self.author = author
   def set_year(self, year): self.year = year
