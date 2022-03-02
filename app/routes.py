@@ -114,7 +114,7 @@ def auth_employee():
       db.set_usertype('employee')
       db.set_user(i.get_name())
       db.set_logged(True)
-      flash('employee')
+      # flash('employee')
       return redirect('/main')
 
   flash('Id de funcionário ou senha inválidos :(')
