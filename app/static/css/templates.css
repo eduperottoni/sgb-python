@@ -111,11 +111,29 @@ button.off{
 div.span-error{
   background-color: rgba(211, 71, 71, 0.918);
   color:#700808;
+  font-weight: 600;
   border:1.5px solid #700808;
   padding:0.25rem 1rem;
   border-radius:0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
 }
+
+div.span-success{
+  background-color: rgba(76, 211, 71, 0.918);
+  color:#1d7008;
+  font-weight: 600;
+  border:1.5px solid #1d7008;
+  padding:0.25rem 1rem;
+  border-radius:0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 
