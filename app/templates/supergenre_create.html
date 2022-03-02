@@ -1,34 +1,44 @@
 {% extends 'base.html' %}
 
 {% block books %}
-  {% set flashed = get_flashed_messages() %} 
-  {% if flashed %}
-    {% for msn in flashed %}
-      <div class="span-error">
-        <p>{{msn}}</p>
-      </div>
-    {% endfor %}
-  {% endif %}
-  <h2>Gêneros e subgêneros já criados:</h2>
-  <ul>
-    {% for key,value in supergenres.items() %}
-      <li>{{key}} | {{value}}</li>
+  <div class="container padding-top-2">
+    <main>
+      <h2>Gêneros e subgêneros já criados:</h2>
       <ul>
-      {% for subgenre in subgenres[key] %}
-        <li>{{subgenre}}</li>
-      {% endfor %}
+        {% for key,value in supergenres.items() %}
+          <li><strong>{{key}} | {{value}}</strong></li>
+          <ul>
+          {% for subgenre in subgenres[key] %}
+            <li>{{subgenre}}</li>
+          {% endfor %}
+          </ul>
+        {% endfor %}
       </ul>
-    {% endfor %}
-  </ul>
-  <form action="/supergenre/create/validation" method="post">
-    <label for="supergenre">
-      Digite um gênero:
-      <input type="text" id="supergenre" name="supergenre" placeholder="Novo gênero">
-    </label>
-    <label for="subgenre">
-      Sub-gênero para o gênero acima:
-      <input type="text" id="subgenre" name="subgenre" placeholder="Novo subgênero">
-    </label>
-    <button class="btn btn-blue" type="submit">Cadastrar gênero e sub-gênero</button>
-  </form>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for msn in flashed %}
+          <div class="span-error">
+            <p>{{msn}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form action="/supergenre/create/validation" method="post">
+        <label for="supergenre">
+          Digite um gênero:
+          <span>(Não poderá ser modificado posteriormente)</span>
+          <input type="text" id="supergenre" name="supergenre" placeholder="Novo gênero">
+        </label>
+        <label for="subgenre">
+          Sub-gênero para o gênero acima:
+          <span>(Não poderá ser modificado posteriormente)</span>
+          <input type="text" id="subgenre" name="subgenre" placeholder="Novo subgênero">
+        </label>
+        <button class="btn btn-blue" type="submit">Cadastrar gênero e sub-gênero</button>
+      </form>
+    </main>
+
+    <a class="btn-red mtop" href="/books">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>
 {% endblock %}

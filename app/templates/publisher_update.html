@@ -1,23 +1,36 @@
 {% extends 'base.html' %}
 {% block publishers %}
-  {% set flashed = get_flashed_messages() %} 
-  {% if flashed %}
-    {% for m in flashed %}
-      <div class="span-error">
-        <p>{{m}}</p>
-      </div>
-    {% endfor %}
-  {% endif %}
-  <form action="/publishers/update/validation/{{publisher.get_id()}}" method="post">
-    <label for="id">
-      <input type="text" value="{{publisher.get_id()}}" id="id" name="id" disabled>
-    </label>
-    <label for="corp-name">
-      <input type="text" value="{{publisher.get_corp_name()}}" id="corp-name" name="corp-name">
-    </label>
-    <label for="phone">
-      <input type="text" value="{{publisher.get_phone()}}" id="phone" name="phone">
-    </label>
-    <button class="btn btn-green" type="submit">Atualizar</button>
-  </form>
+  <div class="container padding-top-10">
+    <main>
+      <h2>Atualização de Editora</h2>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for m in flashed %}
+          <div class="span-error">
+            <p>{{m}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form action="/publishers/update/validation/{{publisher.get_id()}}" method="post">
+        <label for="id">
+          Id da editora (não pode ser alterado):
+          <input type="text" value="{{publisher.get_id()}}" id="id" name="id" disabled>
+        </label>
+        <label for="corp-name">
+          Nome da editora:
+          <input type="text" value="{{publisher.get_corp_name()}}" id="corp-name" name="corp-name">
+        </label>
+        <label for="phone">
+          Telefone (DDD + 8 ou 9 números sem espaço):
+          <input type="text" value="{{publisher.get_phone()}}" id="phone" name="phone">
+        </label>
+        <button class="btn btn-green" type="submit">Atualizar</button>
+      </form>
+    </main>
+  </div>
+{% endblock %}
+{% block back %}
+  <a class="btn-red mtop" href="/publishers">
+    <button class="btn btn-red">Voltar</button>
+  </a>
 {% endblock %}

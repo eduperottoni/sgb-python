@@ -61,21 +61,21 @@ def login_employee():
 @app.route('/auth/client', methods=['POST'])
 def auth_client():
   if client_auth_validation('client', request.form.get('user'), request.form.get('password')):
-  	return redirect('/main')
+    return redirect('/main')
   else:
   	return redirect('/login/client')
 
 @app.route('/auth/student', methods=['POST'])
 def auth_student():
   if client_auth_validation('student', request.form.get('user'), request.form.get('password')):
-  	return redirect('/main')
+    return redirect('/main')
   else:
   	return redirect('/login/student') 
 
 @app.route('/auth/employee', methods=['POST'])
 def auth_employee():
   if employee_auth_validation(request.form.get('id-employee'), request.form.get('password')):
-  	return redirect('/main')
+    return redirect('/main')
   else:
   	return redirect('/login/employee')
 
@@ -224,7 +224,7 @@ def books_create_form(supergenre, subgenre_index):
     if is_valid:
       usertype = db.get_usertype()
       user = db.get_user()
-      return render_template('book_create_form.html', supergenre=supergenre, subgenre=subgenres[supergenre][subgenre_index], usertype=usertype, user=user)
+      return render_template('book_create_form.html', supergenres=supergenres, supergenre=supergenre, subgenre=subgenres[supergenre][subgenre_index], usertype=usertype, user=user)
     else:
       return redirect('/books/create')
   else:
@@ -326,7 +326,7 @@ def publishers_create_validation():
       return redirect('/publishers/create')
     else:
       create_publisher(corp_name, phone)
-      flash('Editora criada')
+      flash(validation_dict['message'])
       return redirect('/publishers')
   else:
     return redirect('/')
@@ -360,7 +360,7 @@ def publishers_update_validation(publisher_id):
   else:
     publishers_list[int(publisher_id)].set_corp_name(corp_name)
     publishers_list[int(publisher_id)].set_phone(phone)
-    flash('Editora modificada')
+    flash('Editora modificada :)')
     return redirect('/publishers')
     
 @app.route('/publishers/delete/', defaults={'publisher_id':None})
@@ -388,7 +388,7 @@ def publishers_delete_validation(publisher_id):
     return redirect(f'/publishers/delete/{publisher_id}')
   else:
     publishers_list[int(publisher_id)] = ''
-    flash('Editora excluída')
+    flash(validation_dict['message'])
     return redirect('/publishers')
 
 

@@ -13,6 +13,9 @@ body{
 }
 
 main{
+  padding:0 0.5rem;
+  min-width: 500px;
+  max-width: 1200px;
   display: flex;
   flex-flow:wrap column;
   text-align: center;
@@ -40,20 +43,24 @@ a.btn-yellow.mtop,
 a.btn-blue.mtop{
   margin-top: 5rem;
 }
-
-a.btn-green.mtop-2,
-a.btn-yellow.mtop-2{
-  margin-top:2rem;
-}
-a.btn-green.mbottom-2{
-  margin-bottom:2rem;
-}
-
 a.btn-red.mbottom,
 a.btn-yellow.mbottom,
 a.btn-blue.mbottom{
+  margin-bottom: 5rem;
+}
+a.btn-green.mtop-2,
+a.btn-yellow.mtop-2,
+a.btn-blue.mtop-2,
+a.btn-red.mtop-2{
+  margin-top:2rem;
+}
+a.btn-red.mbottom-2,
+a.btn-yellow.mbottom-2,
+a.btn-blue.mbottom-2,
+a.btn-green.mbottom-2{
   margin-bottom: 2rem;
 }
+
 
 div.container{
   height: 100%;
@@ -62,7 +69,27 @@ div.container{
   align-items: center;
   justify-content: center;
   flex-direction:column;
+}
+
+div.container.padding-top-10{
   padding-top:10rem;
+}
+
+div.container.padding-top-5{
+  padding-top:5rem;
+}
+
+div.container.padding-top-2{
+  padding-top:2rem;
+}
+
+ul{
+  text-align: left;
+  margin: 0 auto;
+}
+
+ul>ul{
+  padding-left:1.5rem;
 }
 
 button.btn{
@@ -79,7 +106,6 @@ button.btn{
 }
 
 button.btn-red{
-  min-width: 150px;
   background: #c31010;
   box-shadow: 0 0 5px #c31010d3;
 }
@@ -136,4 +162,20 @@ div.span-success{
   margin: 0 auto;
 }
 
+@media (max-width:600px){
+  h2,h1{
+    font-size: 1.5rem;
+  }
+  main{
+    min-width: 300px;
+    max-width: 400px;
+  }
+}
+
+@media (max-width:500px){
+  main{
+    min-width: 250px;
+    max-width: 350px;
+  }
+}
 

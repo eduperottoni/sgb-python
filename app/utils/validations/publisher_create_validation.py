@@ -1,4 +1,3 @@
-from tokenize import Number
 from classes.db import db
 
 def publisher_create_validation(corp_name, phone):
@@ -19,11 +18,11 @@ def publisher_create_validation(corp_name, phone):
       return {'valid':False, 'message':'Nome de editora deve ter mais de 3 caracteres :('}
   #Testando se o telefone tem pelo menos 10 caracteres
   elif(len(phone.strip()) not in [10,11]):
-    return {'valid':False,'message':'Telefone deve conter o DDD e o número'}
+    return {'valid':False,'message':'Telefone deve conter o DDD e o número :('}
   for i in phone:
     if not i.isdigit():
-      return {'valid':False, 'message':'Telefone deve conter apenas números'}
-  return {'valid':True,'message':'Editora criada :)'}
+      return {'valid':False, 'message':'Telefone deve conter apenas números :('}
+  return {'valid':True,'message':f'Editora {corp_name} criada :)'}
         
 
 

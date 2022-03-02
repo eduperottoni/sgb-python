@@ -2,7 +2,7 @@
 
 {% block books %}
   {% if usertype == 'employee' %}
-		<div class="container">
+		<div class="container padding-top-2">
 			<main>
 				<h1>Cadastro de novos clientes</h1>
 				  {% set messages = get_flashed_messages() %} 
@@ -30,12 +30,13 @@
 				    Senha:
 				    <input placeholder="Digite sua senha" type="password" name="password" id="password">
 				  </label>
-				  
 				  <section>
 				  	<label for="student" style="display:flex">
 							<input type="radio" name="client-student" id="student" value="1">Estudante
-						</label>    
-						<input type="radio" name="client-student" id="client" value="2"> Cliente normal</br>
+						</label>
+						<label for="client" style="display:flex">
+							<input type="radio" name="client-student" id="client" value="2">Cliente normal
+						</label>
 				  </section>
 				  <label for="password">
 				    Número da carteirinha:

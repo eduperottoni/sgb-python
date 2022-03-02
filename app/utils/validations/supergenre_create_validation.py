@@ -28,4 +28,4 @@ def supergenre_create_validation(supergenre, subgenre):
   elif exists:
     return {'valid':False, 'message':'Gênero e/ou sub-gênero já existe(m) :('}
   else:
-    return{'valid':True, 'message':'Gênero criado :)'}
+    return{'valid':True, 'message':f'Gênero {supergenre} criado :)'}
