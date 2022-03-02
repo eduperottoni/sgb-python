@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block publishers %}
+  {% set flashed = get_flashed_messages() %} 
+  {% if flashed %}
+    {% for msn in flashed %}
+      <div class="span-error">
+        <p>{{msn}}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+  Aqui criaremos as editoras
+  <form action="/publishers/create/validation" method="post">
+    <label for="corp-name">
+      Nome da editora:
+      <input type="text" name="corp-name" id="corp-name">
+    </label>
+    <label for="phone">
+      Telefone (DDD + 8 ou 9 números sem espaço):
+      <input type="text" name="phone" id="phone">
+    </label>
+    <button class="btn btn-blue" type="submit">Criar editora</button>
+  </form>
+{% endblock %}

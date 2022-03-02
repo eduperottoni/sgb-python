@@ -23,8 +23,8 @@ class Person:
     self.cpf = cpf
     
   def set_birth_date(self, birth_date):
-  	self.birth_date = birth_date
-  
+    self.birth_date = birth_date
+
   def set_password(self, password):
     self.password = password
 
@@ -73,10 +73,9 @@ class Student(Client):
   def get_student_id_card(self):
     return self.student_id_card
   
-  def get_max_number(self):
-    return self.max_number
-  
   def set_student_id_card(self, student_id_card):
     self.student_id_card = student_id_card
     
     
+# student = Student(name='Eduardo', cpf='03651138089', birth_date='18/07/2001', password='1234', student_id_card='000006')
+# print(student.get_max_number())

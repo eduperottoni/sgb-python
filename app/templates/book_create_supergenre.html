@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block books %}
+  {% for key, value in supergenres.items() %}
+    <a class='btn-blue' href="/books/create/{{key}}">
+      <button class="btn btn-blue">{{value}}</button>
+    </a>
+  {% endfor %}
+{% endblock %}
