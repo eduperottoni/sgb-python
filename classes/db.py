@@ -101,35 +101,35 @@ db.add_books_to_list(livro3)
 
 estudante1 = Student(name='Eduardo', 
                      cpf='11111111111', 
-                     birth_date='05-09-2001', 
+                     birth_date='2001-05-09', 
                      password='1234@', 
                      student_id_card='000001')
 
 estudante2 = Student(name='Fernanda', 
                      cpf='22222222222', 
-                     birth_date='13-08-2001', 
+                     birth_date='2001-08-13', 
                      password='@4321', 
                      student_id_card='000002')
 
 cliente1 = Client(name='Lisete', 
                   cpf='33333333333', 
-                  birth_date='12-12-1972', 
+                  birth_date='1972-12-12', 
                   password='abcd#')
                   
 cliente2 = Client(name='Elton', 
                   cpf='44444444444', 
-                  birth_date='05-01-1968', 
+                  birth_date='1968-05-01', 
                   password='#dcba')
                   
 funcionario1 = Employee(name='Eduarda', 
                cpf='55555555555', 
-               birth_date='16-11-1999', 
+               birth_date='1999-11-11', 
                password='123abc', 
                employee_code='00001')
 
 funcionario2 = Employee(name='Tiago', 
                cpf='66666666666', 
-               birth_date='04-01-1995', 
+               birth_date='1995-04-01', 
                password='abc123', 
                employee_code='00002')
                

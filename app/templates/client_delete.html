@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block books %}
+  {% if usertype == 'employee' %}
+    <main class="books-list">
+      <section class="books-theme">
+        <h2>Clientes cadastrados no sistema</h2>
+        <div class="books">
+          {% for i in people_dict['clients'] %}
+            <div class="book">
+              <h2 class="person-name">Nome: {{i.get_name()}}</h2>
+              <hr>
+              <h4 class="person-cpf">CPF: {{i.get_cpf()}}</h4>
+              <h4 class="person-birth-date">{{i.get_birth_date()}}</h4>
+              <hr>
+              <h4>Livros alugados: </h4>
+              {% for j in i.get_rented()%}
+                <article class="rented">{{j.get_title()}}</article>
+              {% endfor %}
+            </div>
+          {% endfor %}
+          {% for i in people_dict['students'] %}
+            <div class="book">
+              <h2 class="person-name">Nome: {{i.get_name()}}</h2>
+              <h3>Estudante</h3>
+              <hr>
+              <h4 class="person-cpf">CPF: {{i.get_cpf()}}</h4>
+              <h4 class="person-birth-date">{{i.get_birth_date()}}</h4>
+              <hr>
+              <h4>Livros alugados: </h4>
+              {% for j in i.get_rented()%}
+                <article class="rented">{{j}}</article>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    </main>  
+  {% else %}
+  {% endif %}
+
+{% endblock %}
+
+{% block back %}
+  <a class="btn-red mtop mbottom-2" href="/clients">
+    <button class="btn btn-red">Voltar</button>
+  </a>
+{% endblock %}
