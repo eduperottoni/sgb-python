@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block books %}
+{% block clients %}
   {% if usertype == 'employee' %}
     <nav>
       <a class="btn-green mtop-2 mbottom-2" href="/clients/create">
@@ -26,14 +26,14 @@
               <h4 class="person-cpf">CPF: {{i.get_cpf()}}</h4>
               <hr>
               <h4>Livros alugados: </h4>
-              {% for j in i.get_rented()%}
+              {% for j in i.get_rented() %}
                 <article class="rented">{{j.get_title()}}</article>
               {% endfor %}
               <hr>
               <a href="/clients/update/clients/{{people_dict['clients'].index(i)}}">
               	<button class="btn btn-yellow">Atualizar</button>
               </a>
-              <a href="/clients/delete/{{i.get_cpf()}}">
+              <a href="/clients/delete/clients/{{people_dict['clients'].index(i)}}">
               	<button class="btn btn-red">Excluir</button>
               </a>
             </div>
@@ -53,7 +53,7 @@
               <a href="/clients/update/students/{{people_dict['students'].index(i)}}">
               	<button class="btn btn-yellow">Atualizar</button>
               </a>
-              <a href="/clients/delete/{{i.get_cpf()}}">
+              <a href="/clients/delete/students/{{people_dict['students'].index(i)}}">
               	<button class="btn btn-red">Excluir</button>
               </a>
             </div>

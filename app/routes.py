@@ -15,6 +15,7 @@ from app.utils.validations.employee_auth_validation import employee_auth_validat
 from app.utils.validations.client_auth_validation import client_auth_validation
 from app.utils.validations.client_create_validation import client_create_validation
 from app.utils.validations.client_update_validation import client_update_validation
+from app.utils.validations.client_delete_validation import client_delete_validation
 
 #Rota inicial
 @app.route('/')
@@ -113,10 +114,11 @@ def clients_create():
 
 @app.route('/clients/create/auth', methods=['POST'])
 def clients_create_auth():
-  #validar os dados do cliente. 
-  if client_create_validation(request.form.get('name'), request.form.get('cpf'), request.form.get('birth_date'), request.form.get('password'), request.form.get('client-student'), request.form.get('student_id_card')):
-    flash('Cliente criado com sucesso :)')
-    return redirect('/clients/create')
+  validation_dict = client_create_validation(request.form.get('name'), request.form.get('cpf'), request.form.get('birth_date'), request.form.get('password'), request.form.get('client-student'), request.form.get('student_id_card'))
+  
+  if validation_dict['valid']:
+    flash(validation_dict['message'])
+    return redirect('/clients')
   else:
   	return redirect('/clients/create')
 
@@ -139,14 +141,41 @@ def clients_update(client_type, indice):
 @app.route('/clients/update/', defaults={'client_type':None, 'indice':None})
 @app.route('/clients/update/<client_type>/<indice>/auth', methods=['POST'])
 def clients_update_auth(client_type, indice):
-  #validar os dados do cliente. Vai ter que pegar o índice para poder ter uma base 
-  if client_update_validation(indice, client_type, request.form.get('name'), request.form.get('cpf'), request.form.get('birth_date'), request.form.get('password'), request.form.get('student_id_card')):
-    flash('Cliente modificado com sucesso :)')
+  validation_dict = client_update_validation(indice, client_type, request.form.get('name'), request.form.get('cpf'), request.form.get('birth_date'), request.form.get('password'), request.form.get('student_id_card'))
+  if validation_dict['valid']:
+    flash(validation_dict['message'])
     return redirect('/clients')
   else:
+    flash(validation_dict['message'])
     return redirect(f'/clients/update/{client_type}/{indice}')
-
     
+@app.route('/clients/delete/', defaults={'client_type':None, 'indice':None})
+@app.route('/clients/delete/<client_type>/<indice>')
+def clients_delete(client_type, indice):
+  if db.get_logged():
+    if indice == None:
+      return redirect('/clients')
+      
+    for i in db.get_people_dict()[client_type]:
+      if i == db.get_people_dict()[client_type][int(indice)]:
+        usertype = db.get_usertype()
+        user = db.get_user()
+        return render_template('clients_delete.html', client_type=client_type, indice=indice, client=i, usertype=usertype, user=user)
+   
+  else:
+    return redirect('/index')
+
+@app.route('/clients/delete/', defaults={'client_type':None, 'indice':None})
+@app.route('/clients/delete/<client_type>/<indice>/auth')
+def clients_delete_auth(client_type, indice):
+  validation_dict = client_delete_validation(client_type, indice)
+  if validation_dict['valid']:
+    del db.get_people_dict()[client_type][int(indice)]
+    flash(validation_dict['message'])
+    return redirect('/clients')
+  else:
+    return redirect(f'/clients/delete/{client_type}/{indice}')
+   
 #Rota de visualização da lista de livros
 @app.route('/books/view')
 def show_books():

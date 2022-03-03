@@ -11,7 +11,8 @@ class Person:
   def get_cpf(self):
     return self.cpf
   
-  def get_birth_date(self): return self.birth_date
+  def get_birth_date(self): 
+    return self.birth_date
   
   def get_password(self):
     return self.password
@@ -45,17 +46,25 @@ class Client(Person):
     Person.__init__(self, name, cpf, birth_date, password)
     
     self.rented = []
-    self.max_number = 3
-    
+
   def get_rented(self):
     return self.rented
   
   def get_max_number(self):
     return self.max_number
+    
+  def get_max_number():
+    return 3
   	
   def set_rented(self, rented):
     self.rented = rented
-   
+  
+  def get_rent(self):
+  	if len(self.rented) > 0:
+  		return True
+  	else:
+  		return False
+  		
   # book é um objeto 
   def rent(self, book):
     self.rented.append(book)
@@ -68,14 +77,13 @@ class Student(Client):
     Client.__init__(self, name, cpf, birth_date, password)
     
     self.student_id_card = student_id_card
-    self.max_number = 5
   
   def get_student_id_card(self):
     return self.student_id_card
   
+  # polimorfismo
+  def get_max_number():
+    return 5
+  
   def set_student_id_card(self, student_id_card):
     self.student_id_card = student_id_card
-    
-    
-# student = Student(name='Eduardo', cpf='03651138089', birth_date='18/07/2001', password='1234', student_id_card='000006')
-# print(student.get_max_number())
