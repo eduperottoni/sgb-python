@@ -54,6 +54,20 @@ a.btn-blue.mtop-2,
 a.btn-red.mtop-2{
   margin-top:2rem;
 }
+
+a.btn-green.mtop-1,
+a.btn-yellow.mtop-1,
+a.btn-blue.mtop-1,
+a.btn-red.mtop-1{
+  margin-top:1rem;
+}
+
+a.btn-green.mbottom-1,
+a.btn-yellow.mbottom-1,
+a.btn-blue.mbottom-1,
+a.btn-red.mbottom-1{
+  margin-bottom:1rem;
+}
 a.btn-red.mbottom-2,
 a.btn-yellow.mbottom-2,
 a.btn-blue.mbottom-2,

@@ -3,8 +3,9 @@ from classes.db import db
 def book_update_validation(book, title, publisher, author, year, bio, pgs_number, total_amount):
   exists = False
   for i in db.get_books_list():
-    if i.get_title() == title and i.get_id() != book.get_id():
-      exists = True
+    if i:
+      if i.get_title() == title and i.get_id() != book.get_id():
+        exists = True
   has_numbers = False
   for i in author:
     if i.isdigit():

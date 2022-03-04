@@ -18,13 +18,14 @@ div.books{
 }
 
 div.book{
-  min-width: 250px;
+  /* min-width: 250px; */
   background: #055ed3d0;
   box-shadow: 0 0 10px #4393fb;
   padding: 0.5rem;
   border-radius:0.8rem;
   display: flex;
   flex-flow: nowrap column;
+  word-wrap: break-word;
   gap:.5rem;
 }
 
@@ -56,9 +57,10 @@ div.book hr{
   }
 }
 
-@media (max-width:540px){
+@media (max-width:600px){
   div.books{
     grid-template-columns: 1fr;
   }
+  
 }
 

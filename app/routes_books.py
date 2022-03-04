@@ -6,8 +6,10 @@ from classes.book import supergenres, subgenres
 
 from app.utils.creations.create_book import create_book
 from app.utils.updates.update_book import update_book
+from app.utils.deletes.delete_book import delete_book
 from app.utils.validations.book_create_validation import book_create_validation
 from app.utils.validations.book_update_validation import book_update_validation
+from app.utils.validations.book_delete_validation import book_delete_validation
 
 #Rota principal dos livros
 @app.route('/books')
@@ -88,22 +90,25 @@ def books_create_form(supergenre, subgenre_index):
 @app.route('/books/create/validation/<supergenre>/<subgenre_index>', methods=['POST'])
 def books_create_validation(supergenre, subgenre_index):
   if db.get_logged():
-    title = request.form.get('title')
-    publisher_id= request.form.get('publisher')
-    author = request.form.get('author')
-    year = int(request.form.get('year'))
-    bio = request.form.get('bio')
-    pgs_number = int(request.form.get('pgs-number'))
-    total_amount = int(request.form.get('total-amount'))
-    validation_dict = book_create_validation(title, publisher_id, author, year, bio, pgs_number, total_amount)
-    publishers = db.get_publishers_list()
-    while validation_dict['valid'] == False:
-      flash(validation_dict['message'])
-      return redirect(f'/books/create/{supergenre}/{subgenre_index}')
-    else:
-      create_book(title, publishers[int(publisher_id)], author,year, supergenre, subgenres[supergenre][int(subgenre_index)], bio, pgs_number, total_amount)
-      flash(validation_dict['message'])
+    if supergenre == None or subgenre_index == None or int(subgenre_index) > len(db.get_books_list())-1 :
       return redirect('/books')
+    else:
+      title = request.form.get('title')
+      publisher_id= request.form.get('publisher')
+      author = request.form.get('author')
+      year = int(request.form.get('year'))
+      bio = request.form.get('bio')
+      pgs_number = int(request.form.get('pgs-number'))
+      total_amount = int(request.form.get('total-amount'))
+      validation_dict = book_create_validation(title, publisher_id, author, year, bio, pgs_number, total_amount)
+      publishers = db.get_publishers_list()
+      while validation_dict['valid'] == False:
+        flash(validation_dict['message'])
+        return redirect(f'/books/create/{supergenre}/{subgenre_index}')
+      else:
+        create_book(title, publishers[int(publisher_id)], author,year, supergenre, subgenres[supergenre][int(subgenre_index)], bio, pgs_number, total_amount)
+        flash(validation_dict['message'])
+        return redirect('/books')
   else:
     return redirect('/')
 
@@ -147,3 +152,32 @@ def books_update_validation(book_id):
       return redirect('/books')
   else:
     return redirect('/')
+
+#Delete dos livros
+@app.route('/books/delete/', defaults={'book_id':None})
+@app.route('/books/delete/<book_id>')
+def books_delete(book_id):
+  if db.get_logged():
+    if book_id == None or int(book_id) > len(db.get_publishers_list())-1 :
+      return redirect('/books')
+    else:
+      book = db.get_book_from_list(int(book_id))
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('book_delete.html', book=book, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
+
+#Validação do delete dos livros
+@app.route('/books/delete/validation/', defaults={'book_id':None})
+@app.route('/books/delete/validation/<book_id>')
+def books_delete_validation(book_id):
+  book = db.get_book_from_list(int(book_id))
+  validation_dict = book_delete_validation(book)
+  while validation_dict['valid'] == False:
+    flash(validation_dict['message'])
+    return redirect(f'/book/delete/{book_id}')
+  else:
+    delete_book(int(book_id))
+    flash(validation_dict['message'])
+    return redirect('/books')

@@ -4,8 +4,9 @@ from classes.db import db
 def book_create_validation(title, publisher, author, year, bio, pgs_number, total_amount):
   exists = False
   for book in db.get_books_list():
-    if book.get_title() == title:
-      exists = True
+    if book:
+      if book.get_title() == title:
+        exists = True
   has_numbers = False
   for i in author:
     if i.isdigit():

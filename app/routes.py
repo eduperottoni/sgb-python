@@ -130,12 +130,12 @@ def clients_create():
 @app.route('/clients/create/auth', methods=['POST'])
 def clients_create_auth():
   validation_dict = client_create_validation(request.form.get('name'), request.form.get('cpf'), request.form.get('birth_date'), request.form.get('password'), request.form.get('client-student'), request.form.get('student_id_card'))
-  
   if validation_dict['valid']:
     flash(validation_dict['message'])
     return redirect('/clients')
   else:
-  	return redirect('/clients/create')
+    flash(validation_dict['message'])
+    return redirect('/clients/create')
 
 @app.route('/clients/update', defaults={'client_type':None, 'indice':None})
 @app.route('/clients/update/<client_type>/<indice>')
@@ -185,7 +185,7 @@ def clients_delete(client_type, indice):
 def clients_delete_auth(client_type, indice):
   validation_dict = client_delete_validation(client_type, indice)
   if validation_dict['valid']:
-    del db.get_people_dict()[client_type][int(indice)]
+    db.delete_people_from_dict(client_type, int(indice))
     flash(validation_dict['message'])
     return redirect('/clients')
   else:

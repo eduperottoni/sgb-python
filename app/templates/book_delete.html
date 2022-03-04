@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block books %}
+  <div class="container padding-top-10">
+    <main>
+      <h2>Você realmente deseja deletar o livro {{book.get_title()}}?</h2>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for m in flashed %}
+          <div class="span-error">
+            <p>{{m}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <a class='btn-blue' href="/books">
+        <button class="btn btn-blue">Cancelar</button>
+      </a>
+      <a class="btn-red" href="/books/delete/validation/{{book.get_id()}}">
+        <button class="btn btn-red">Deletar</button>
+      </a>
+    </main>
+  </div>
+{% endblock %}
