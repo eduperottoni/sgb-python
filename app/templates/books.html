@@ -1,47 +1,56 @@
 {% extends 'base.html' %}
 
 {% block books %}
-  {% set flashed = get_flashed_messages() %} 
-  {% if flashed %}
-    {% for msn in flashed %}
-      <div class="span-success">
-        <p>{{msn}}</p>
-      </div>
-    {% endfor %}
-  {% endif %}
   {% if usertype == 'employee' %}
     <nav class="options">
-      <a class="btn-green mtop-2 mbottom-2" href="/books/create">
-        <button class="btn btn-green">Criar livro</button>
+      <a class="btn-blue mtop-2 mbottom-2" href="/books/create">
+        <button class="btn btn-blue">Criar livro</button>
       </a>
-      <a class="btn-green mtop-2 mbottom-2" href="/supergenre/create">
-        <button class="btn btn-green">Criar Gênero</button>
+      <a class="btn-blue mtop-2 mbottom-2" href="/supergenre/create">
+        <button class="btn btn-blue">Criar Gênero</button>
       </a>
-      <a class="btn-green mtop-2 mbottom-2" href="/subgenre/create">
-        <button class="btn btn-green">Criar Sub-gênero</button>
+      <a class="btn-blue mtop-2 mbottom-2" href="/subgenre/create">
+        <button class="btn btn-blue">Criar Sub-gênero</button>
       </a>
     </nav>
-    <div>{{books_list}}</div>
-    <main class="books-list">
-      <section class="books-theme">
-        <h2>Livros de Assunto</h2>
-        <div class="books">
-          {% for i in books_list %}
-            <div class="book">
-              <h2 class="book-title">{{i.get_title()}}</h2>
-              <hr>
-              <h4 class="book-publisher"> Editora: {{i.get_publisher().get_corp_name()}}</h4>
-              <hr>
-              <h4 class="book-author">Autor: {{i.get_author()}}</h4>
-              <hr>
-              <article class="book-bio">{{i.get_bio()}}</article>
-              <a href="/books/{{i.get_id()}}" class="mtop-2 btn-yellow">
-                <button class="btn btn-yellow">Detalhes</button>
-              </a>
-            </div>
-          {% endfor %}
+    {% set flashed = get_flashed_messages() %} 
+    {% if flashed %}
+      {% for msn in flashed %}
+        <div class="span-success">
+          <p>{{msn}}</p>
         </div>
-      </section>
+      {% endfor %}
+    {% endif %}
+    <main class="books-list">
+      {% for key, genre in supergenres.items() %}
+        <section class="books-theme">
+          <h2>Livros de {{genre}}</h2>
+          <div class="books">
+            {% for book in books_list %}
+              {% if book %}
+                {% if book.get_supergenre() == key %}
+                  <div class="book">
+                    <h2 class="book-title">{{book.get_title()}}</h2>
+                    <hr>
+                    <h4 class="book-publisher"> Editora: {{book.get_publisher().get_corp_name()}}</h4>
+                    <hr>
+                    <h4 class="book-author">Autor: {{book.get_author()}}</h4>
+                    <hr>
+                    <h4 class="book-leased">Alugados: {{book.get_leased_amount()}}</h4>
+                    <hr>
+                    <h4 class="book-available">Disponíveis: {{book.get_available_amount()}}</h4>
+                    <h4></h4>
+                    <article class="book-bio">{{book.get_bio()}}</article>
+                    <a href="/books/{{book.get_id()}}" class="mtop-2 btn-yellow">
+                      <button class="btn btn-yellow">Detalhes</button>
+                    </a>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </section>
+      {% endfor %}
     </main>  
   {% else %}
   {% endif %}

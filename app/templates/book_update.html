@@ -1,7 +1,78 @@
 {% extends 'base.html' %}
-{% block clients %}
-  <h1>Alteração | Livro {{book.get_id()}}</h1>
-  <form action="/books/update/validation" method="post">
-    
-  </form>
+{% block books %}
+  <div class="container padding-top-2">
+    <main>
+      <h2>Alteração de livro</h2>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for msn in flashed %}
+          <div class="span-error">
+            <p>{{msn}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form action="/books/update/validation/{{book.get_id()}}" method="post">
+        <label for="id">
+          Id:
+          <input value="{{book.get_id()}}" type="text" id="id" name="id" disabled>
+        </label>
+        <label for="title">
+          Título:
+          <input value="{{book.get_title()}}" type="text" id="title" name="title">
+        </label>
+        <label for="publisher">
+          Editora:
+          <select name="publisher" id="publisher">
+            {% for publisher in publishers %}
+              <option value="{{publisher.get_id()}}">{{publisher.get_corp_name()}}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label for="author">
+          Autor:
+          <input value="{{book.get_author()}}" type="text" id="author" name="author">
+        </label>
+        <label for="author">
+          Ano:
+          <input value="{{book.get_year()}}" type="text" id="year" name="year">
+        </label>
+        <label for="supergenre">
+          Gênero:
+          <input value="{{book.get_supergenre()}}" type="text" id="supergenre" name="supergenre"disabled>
+        </label>
+        <label for="subgenre">
+          Sub-gênero:
+          <input value="{{book.get_subgenre()}}" type="text" id="subgenre" name="subgenre"disabled>
+        </label>
+        <label for="subgenre">
+          Bio:
+          <textarea type="text" id="bio" name="bio" >{{book.get_bio()}}</textarea>
+        </label>
+        <label for="pgs-number">
+          Número de páginas:
+          <input value="{{book.get_pgs_number()}}" type="text" id="pgs-number" name="pgs-number">
+        </label>
+        <label for="total-amount">
+          Quantidade total:
+          (deve estar entre {{book.get_leased_amount()}} e 100)
+          <input value="{{book.get_total_amount()}}" type="text" id="total-amount" name="total-amount">
+        </label>
+        <label for="leased-amount">
+          Quantidade alugada:
+          <input value="{{book.get_leased_amount()}}" type="text" id="leased-amount" name="leased-amount"disabled>
+        </label>
+        <label for="available-amount">
+          Quantidade disponível:
+          <input value="{{book.get_available_amount()}}" type="text" id="available-amount" name="available-amount"disabled>
+        </label>
+
+        <button type="submit" class="btn btn-green">Atualizar informações</button>
+      </form>
+
+      <a class="btn-red mtop-2" href="/books/{{book.get_id()}}">
+        <button class="btn btn-red">Voltar</button>
+      </a>
+    </main>
+
+  </div>
 {% endblock %}

@@ -4,6 +4,7 @@
   <div class="container padding-top-2">
     <main>
       <h2>Detalhes do livro <br/>{{book.get_title()}}</h2>
+
       <form>
         <label for="id">
           Id:
@@ -20,6 +21,10 @@
         <label for="author">
           Autor:
           <input value="{{book.get_author()}}" type="text" id="author" name="author"disabled>
+        </label>
+        <label for="author">
+          Ano:
+          <input value="{{book.get_year()}}" type="text" id="year" name="year"disabled>
         </label>
         <label for="supergenre">
           Gênero:
@@ -49,13 +54,15 @@
           Quantidade disponível:
           <input value="{{book.get_available_amount()}}" type="text" id="available-amount" name="available-amount"disabled>
         </label>
-
       </form>
-    </main>
 
-    <a class="btn-blue mtop-2 mbottom-2" href="/books/update/{{book.get_id()}}">
-      <button class="btn btn-blue">Alterar livro</button>
-    </a>
+      <a class="btn-blue mtop-2" href="/books/update/{{book.get_id()}}">
+        <button class="btn btn-blue">Alterar livro</button>
+      </a>
+      <a class="btn-red mtop-1" href="/books/delete/{{book.get_id()}}">
+        <button class="btn btn-red">Deletar livro</button>
+      </a>
+    </main>
 
     <a class="btn-red mtop-2" href="/books">
       <button class="btn btn-red">Voltar</button>

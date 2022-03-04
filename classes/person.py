@@ -49,9 +49,6 @@ class Client(Person):
 
   def get_rented(self):
     return self.rented
-  
-  def get_max_number(self):
-    return self.max_number
     
   def get_max_number():
     return 3
@@ -59,11 +56,9 @@ class Client(Person):
   def set_rented(self, rented):
     self.rented = rented
   
-  def get_rent(self):
-  	if len(self.rented) > 0:
-  		return True
-  	else:
-  		return False
+  def has_books(self):
+    if len(self.rented) > 0: return True
+    else: return False
   		
   # book é um objeto 
   def rent(self, book):

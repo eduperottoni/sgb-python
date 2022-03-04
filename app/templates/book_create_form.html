@@ -4,7 +4,15 @@
   <div class="container padding-top-2">
     <main>
       <h2>Criar livro</h2>
-      <form action="/books/create/validation" method="post">
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for msn in flashed %}
+          <div class="span-error">
+            <p>{{msn}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form action="/books/create/validation/{{supergenre}}/{{subgenre_index}}" method="post">
         <label for="id">
           Id:
           <span>(será gerado automaticamente pelo sistema)</span>
@@ -16,11 +24,19 @@
         </label>
         <label for="publisher">
           Editora:
-          <input type="text" id="publisher" name="publisher">
+          <select name="publisher" id="publisher">
+            {% for publisher in publishers %}
+              <option value="{{publisher.get_id()}}">{{publisher.get_corp_name()}}</option>
+            {% endfor %}
+          </select>
         </label>
         <label for="author">
           Autor:
           <input type="text" id="author" name="author">
+        </label>
+        <label for="author">
+          Ano:
+          <input type="number" id="year" name="year">
         </label>
         <label for="supergenre">
           Gênero:
@@ -28,7 +44,7 @@
         </label>
         <label for="subgenre">
           Sub-gênero:
-          <input value="{{subgenre}}" type="text" id="subgenre" name="subgenre"disabled>
+          <input value="{{subgenre}}" type="text" id="subgenre" name="subgenre" disabled>
         </label>
         <label for="subgenre">
           Bio:
@@ -36,11 +52,11 @@
         </label>
         <label for="pgs-number">
           Número de páginas:
-          <input  type="text" id="pgs-number" name="pgs-number">
+          <input  type="number" id="pgs-number" name="pgs-number">
         </label>
         <label for="total-amount">
           Quantidade total:
-          <input type="text" id="total-amount" name="total-amount">
+          <input type="number" id="total-amount" name="total-amount">
         </label>
         <label for="leased-amount">
           Quantidade alugada:

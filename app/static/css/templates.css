@@ -54,6 +54,20 @@ a.btn-blue.mtop-2,
 a.btn-red.mtop-2{
   margin-top:2rem;
 }
+
+a.btn-green.mtop-1,
+a.btn-yellow.mtop-1,
+a.btn-blue.mtop-1,
+a.btn-red.mtop-1{
+  margin-top:1rem;
+}
+
+a.btn-green.mbottom-1,
+a.btn-yellow.mbottom-1,
+a.btn-blue.mbottom-1,
+a.btn-red.mbottom-1{
+  margin-bottom:1rem;
+}
 a.btn-red.mbottom-2,
 a.btn-yellow.mbottom-2,
 a.btn-blue.mbottom-2,
@@ -118,6 +132,7 @@ button.btn-blue{
 button.btn-yellow{
   background:#f8e008;
   box-shadow: 0px 0px 10px #f8d71bcc;
+  color: rgba(0, 0, 0, 0.616);
 }
 
 button.btn-green{
@@ -128,6 +143,10 @@ button.btn-green{
 button.btn:hover{
   box-shadow:none;
   color: #fff;
+}
+
+button.btn-yellow:hover{
+  color:black;
 }
 
 button.off{

@@ -41,7 +41,7 @@ def client_update_validation(indice, client_type, name, cpf, birth_date, passwor
 				client.set_password(password)
 				client.set_student_id_card(student_id_card)
 				  
-				return {'valid':True,'message':'Cliente modificado com sucesso :)'}  
+				return {'valid':True,'message':f'Cliente {name} modificado com sucesso :)'}  
 				 
 	else:
 		if name == '' or cpf == '' or birth_date == '' or password == '':

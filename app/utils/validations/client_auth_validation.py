@@ -17,12 +17,13 @@ def client_auth_validation(t, char, password):
 			return False  
 	 
 		else:
-			for i in db.get_people_dict()[(t+"s")]:
-				if user == i.get_cpf() and password == i.get_password(): 
-					db.set_usertype(t)
-					db.set_user(i.get_name())
-					db.set_logged(True)
-					return True
+			if db.get_people_dict()[(t+"s")]:
+				for i in db.get_people_dict()[(t+"s")]:
+					if user == i.get_cpf() and password == i.get_password(): 
+						db.set_usertype(t)
+						db.set_user(i.get_name())
+						db.set_logged(True)
+						return True
 
-			flash('Usuário ou senha inválidos :(')
-			return False  
+				flash('Usuário ou senha inválidos :(')
+				return False  
