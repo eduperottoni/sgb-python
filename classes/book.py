@@ -58,7 +58,6 @@ class Book:
   def get_total_amount(self): return self.total_amount
   def get_leased_amount(self): return self.leased_amount
 
-  def set_id(self, id) : self.id = id
   def set_supergenre(self, supergenre): self.supergenre = supergenre
   def set_subgenre(self, subgenre): self.subgenre = subgenre
   def set_title(self, title) : self.title = title

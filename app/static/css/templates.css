@@ -118,6 +118,7 @@ button.btn-blue{
 button.btn-yellow{
   background:#f8e008;
   box-shadow: 0px 0px 10px #f8d71bcc;
+  color: rgba(0, 0, 0, 0.616);
 }
 
 button.btn-green{
@@ -128,6 +129,10 @@ button.btn-green{
 button.btn:hover{
   box-shadow:none;
   color: #fff;
+}
+
+button.btn-yellow:hover{
+  color:black;
 }
 
 button.off{

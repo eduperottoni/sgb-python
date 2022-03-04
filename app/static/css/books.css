@@ -28,6 +28,16 @@ div.book{
   gap:.5rem;
 }
 
+div.book{
+  background:#4d99fde8;
+}
+
+div.book{
+  background:rgb(95, 196, 255);
+  border: 2px solid #4d99fde8;
+}
+
+
 div.book h2{
   min-height: 64px;
 }

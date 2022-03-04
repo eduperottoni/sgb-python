@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block books %}
+  <div class="container padding-top-10">
+    <main>
+      <h2>Criar sub-gênero</h2>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for msn in flashed %}
+          <div class="span-error">
+            <p>{{msn}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form action="/subgenre/create/validation" method="post">
+        <label for="supergenre">
+          Selecione o gênero do sub-gênero:
+          (não poderá ser modificado posteriormente)
+          <select name="supergenre" id="supergenre">
+            {% for key, value in supergenres.items() %}
+              <option value="{{key}}">{{value}}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label for="subgenre">
+          Sub-gênero:
+          (não poderá ser modificado posteriormente)
+          <input type="text" id="subgenre" name="subgenre">
+        </label>
+
+        <button class="btn btn-green" type="submit">Criar sub-gênero</button>
+      </form>
+    </main>
+  </div>
+{% endblock %}

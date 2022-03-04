@@ -1,21 +1,36 @@
 #Importação dos métodos do flask
-from contextlib import redirect_stderr
+# from contextlib import redirect_stderr
 from app import app
+from app import routes_publishers
+from app import routes_books
+
 from flask import render_template, request, flash, redirect
+
 #Importação das funções para cada página
 from classes.db import db
 from classes.book import supergenres, subgenres
-from app.utils.validations.publisher_update_validation import publisher_update_validation
-from app.utils.validations.publisher_delete_validation import publisher_delete_validation
-from app.utils.validations.publisher_create_validation import publisher_create_validation
-from app.utils.creations.create_publisher import create_publisher
+
 from app.utils.validations.supergenre_create_validation import supergenre_create_validation
-from app.utils.creations.create_supergenre import create_supergenre
+from app.utils.validations.subgenre_create_validation import subgenre_create_validation
+
+from app.utils.creations.create_supergenre_subgenre import create_supergenre, create_subgenre
 from app.utils.validations.employee_auth_validation import employee_auth_validation
 from app.utils.validations.client_auth_validation import client_auth_validation
 from app.utils.validations.client_create_validation import client_create_validation
 from app.utils.validations.client_update_validation import client_update_validation
 from app.utils.validations.client_delete_validation import client_delete_validation
+
+#HEADER DO FUNCIONÁRIO:
+### Livros (alteração, criação e delete de livros)
+### Clientes (alterar, criar e deletar clientes)
+### Outros funcionários (alterar, criar, e deletar funcionários --> auth especial de admin)
+### Logout do funcionário
+
+#HEADER DO CLIENTE:
+### Livros no main
+### Devolução (lista de livros do cliente com opção de devolução)
+### Perfil (alterar dados)
+### Logout do cliente
 
 #Rota inicial
 @app.route('/')
@@ -189,76 +204,6 @@ def logout():
   db.set_logged('')
   return redirect('/')
 
-#Rota de criação de livros
-@app.route('/books')
-def books():
-  user = db.get_user()
-  usertype = db.get_usertype()
-  books_list = db.get_books_list()
-  if db.get_logged():
-    return render_template('books.html', usertype = usertype, books_list=books_list, user=user)
-  else:
-    return redirect('/index')
-
-@app.route('/books/', defaults={'book_id':None})
-@app.route('/books/<book_id>')
-def book_details(book_id):
-  if db.get_logged():
-    if book_id == None or int(book_id) > len(db.get_books_list())-1:
-      return redirect('/books')
-    else:
-      index = int(book_id)
-      book = db.get_book_from_list(index)
-      usertype = db.get_usertype()
-      user = db.get_user()
-      return render_template('book_details.html', book=book, usertype=usertype, user=user)
-  else:
-    return redirect('/index')
-
-@app.route('/books/create')
-def books_create_supergenre():
-  if db.get_logged():
-    usertype = db.get_usertype()
-    user = db.get_user()
-    return render_template('book_create_supergenre.html', supergenres=supergenres, usertype=usertype, user=user)
-  else:
-    return redirect('/')
-
-@app.route('/books/create', defaults={'supergenre':None})
-@app.route('/books/create/<supergenre>')
-def books_create_subgenre(supergenre):
-  if db.get_logged():
-    if supergenre == None or supergenre not in supergenres.keys():
-      return redirect('/books/create')
-    else:
-      subgenres_list = subgenres[supergenre]
-      usertype = db.get_usertype()
-      user = db.get_user()
-      return render_template('book_create_subgenre.html', supergenre=supergenre, subgenres=subgenres_list, usertype=usertype, user=user)
-  else:
-    return redirect('/index')
-
-@app.route('/books/create', defaults={'supergenre':None, 'subgenre_index':None})
-@app.route('/books/create/<supergenre>/<subgenre_index>')
-def books_create_form(supergenre, subgenre_index):
-  subgenre_index = int(subgenre_index)
-  if db.get_logged():
-    is_valid = True
-    if supergenre == None or supergenre not in supergenres.keys():
-      is_valid = False
-    else:
-      if subgenre_index not in range (0,len(subgenres[supergenre])):
-        is_valid = False
-    
-    if is_valid:
-      usertype = db.get_usertype()
-      user = db.get_user()
-      return render_template('book_create_form.html', supergenres=supergenres, supergenre=supergenre, subgenre=subgenres[supergenre][subgenre_index], usertype=usertype, user=user)
-    else:
-      return redirect('/books/create')
-  else:
-    return redirect('/index')
-
 @app.route('/supergenre/create')
 def supergenre_create():
   if db.get_logged():
@@ -283,187 +228,29 @@ def supergenres_create_validation():
       return redirect('/books')
   else:
     return redirect('/')
-#   user = db.get_user()
-#   usertype = db.get_usertype()
-#   if (db.get_logged()):
-#     return render_template('publisher_create.html', usertype=usertype, user=user)
-#   else:
-#     return redirect('/')
 
-@app.route('/books/update/', defaults={'book_id':None})
-@app.route('/books/update/<book_id>')
-def book_update(book_id):
+@app.route('/subgenre/create')
+def subgenre_create():
   if db.get_logged():
-    if book_id == None or int(book_id) > len(db.get_books_list())-1 :
-      return redirect('/books')
-    else:
-      index = int(book_id)
-      book = db.get_book_from_list(index)
       usertype = db.get_usertype()
       user = db.get_user()
-      return render_template('book_update.html', book=book, usertype=usertype, user=user)
+      return render_template('subgenre_create.html', supergenres=supergenres, subgenres=subgenres, usertype=usertype, user=user)
   else:
     return redirect('/index')
 
-@app.route('/books/update/validation', methods=['POST'])
-def book_update_validation():
-  title = request.form.get('id-employee')
-  password = request.form.get('password')
-  #Fazer a validação de login de cliente abaixo em arquivo separado com as seguintes validações:
-  
-  # while user !='admin' and password !='1234@': #while user not in dicionário de clientes do banco:
-  #   if user =='' and password=='':
-  #     flash('Campos vazios :(')
-  #   else:
-  #     flash('Id de funcionário ou senha inválidos :(')
-  #   # flash('Olá, tudo bem')
-  #   return redirect('/login/employee')
-  # else:
-  #   db.set_usertype('employee')
-  #   db.set_user(user)
-  #   db.set_logged(True)
-  #   flash('employee')
-  #   return redirect('/main')
-
-@app.route('/publishers')
-def publishers():
-  publishers_list = db.get_publishers_list()
-  user = db.get_user()
-  usertype = db.get_usertype()
-  if (db.get_logged()):
-    return render_template('publishers.html', publishers_list = publishers_list, usertype=usertype, user=user)
-  else:
-    return redirect('/')
-
-@app.route('/publishers/create')
-def publishers_create():
-  user = db.get_user()
-  usertype = db.get_usertype()
-  if (db.get_logged()):
-    return render_template('publisher_create.html', usertype=usertype, user=user)
-  else:
-    return redirect('/')
-
-@app.route('/publishers/create/validation', methods=['POST'])
-def publishers_create_validation():
+@app.route('/subgenre/create/validation', methods=['POST'])
+def subgenres_create_validation():
   if db.get_logged():
-    corp_name = request.form.get('corp-name')
-    phone = request.form.get('phone')
-    validation_dict = publisher_create_validation(corp_name, phone)
+    supergenre = request.form.get('supergenre')
+    subgenre = request.form.get('subgenre').title()
+    validation_dict = subgenre_create_validation(subgenre)
     while validation_dict['valid'] == False:
+      print('oi')
       flash(validation_dict['message'])
-      return redirect('/publishers/create')
+      return redirect('/subgenre/create')
     else:
-      create_publisher(corp_name, phone)
+      create_subgenre(supergenre, subgenre)
       flash(validation_dict['message'])
-      return redirect('/publishers')
+      return redirect('/books')
   else:
     return redirect('/')
-
-
-@app.route('/publishers/update/', defaults={'publisher_id':None})
-@app.route('/publishers/update/<publisher_id>')
-def publishers_update(publisher_id):
-  if db.get_logged():
-    if publisher_id == None or int(publisher_id) > len(db.get_publishers_list())-1 :
-      return redirect('/publishers')
-    else:
-      index = int(publisher_id)
-      publisher = db.get_publisher_from_list(index)
-      usertype = db.get_usertype()
-      user = db.get_user()
-      return render_template('publisher_update.html', publisher=publisher, usertype=usertype, user=user)
-  else:
-    return redirect('/index')
-
-@app.route('/publishers/update/validation/', defaults={'publisher_id':None})
-@app.route('/publishers/update/validation/<publisher_id>', methods=['POST'])
-def publishers_update_validation(publisher_id):
-  corp_name = request.form.get('corp-name')
-  phone = request.form.get('phone')
-  publishers_list = db.get_publishers_list()
-  validation_dict = publisher_update_validation(publisher_id, corp_name, phone)
-  while validation_dict['valid'] == False: #while user not in dicionário de clientes do banco:
-    flash(validation_dict['message'])
-    return redirect(f'/publishers/update/{publisher_id}')
-  else:
-    publishers_list[int(publisher_id)].set_corp_name(corp_name)
-    publishers_list[int(publisher_id)].set_phone(phone)
-    flash('Editora modificada :)')
-    return redirect('/publishers')
-    
-@app.route('/publishers/delete/', defaults={'publisher_id':None})
-@app.route('/publishers/delete/<publisher_id>')
-def publisher_delete(publisher_id):
-  if db.get_logged():
-    if publisher_id == None or int(publisher_id) > len(db.get_publishers_list())-1 :
-      return redirect('/publishers')
-    else:
-      index = int(publisher_id)
-      publisher = db.get_publisher_from_list(index)
-      usertype = db.get_usertype()
-      user = db.get_user()
-      return render_template('publisher_delete.html', publisher=publisher, usertype=usertype, user=user)
-  else:
-    return redirect('/index')
-
-@app.route('/publishers/delete/validation/', defaults={'publisher_id':None})
-@app.route('/publishers/delete/validation/<publisher_id>')
-def publishers_delete_validation(publisher_id):
-  publishers_list = db.get_publishers_list()
-  validation_dict = publisher_delete_validation(int(publisher_id))
-  while validation_dict['valid'] == False:
-    flash(validation_dict['message'])
-    return redirect(f'/publishers/delete/{publisher_id}')
-  else:
-    publishers_list[int(publisher_id)] = ''
-    flash(validation_dict['message'])
-    return redirect('/publishers')
-
-
-
-#HEADER DO FUNCIONÁRIO:
-### Livros (alteração, criação e delete de livros)
-### Clientes (alterar, criar e deletar clientes)
-### Outros funcionários (alterar, criar, e deletar funcionários --> auth especial de admin)
-### Logout do funcionário
-
-#HEADER DO CLIENTE:
-### Livros no main
-### Devolução (lista de livros do cliente com opção de devolução)
-### Perfil (alterar dados)
-### Logout do cliente
-
-# if user=='03651138089' and password=='1234@':
-#   db.set_user(user)
-#   return redirect('/index')
-# else:
-#   flash('Dados inválidos')
-#   return redirect('/login')
-
-# @app.route('/register')
-# def cadastro():
-#   if db.user == '03651138089':
-#     return render_template('cadastro_livros.html')
-#   else:
-#     return 'Você não possui acesso de admin'
-
-# @app.route('/auth_books', methods=['POST'])
-# def print():
-#   nome_livro = request.form.get('livro')
-#   nome_autor = request.form.get('autor')
-#   db.lista_livros.append([nome_autor, nome_livro])
-#   return redirect('/books')
-
-# @app.route('/books')
-# def books():
-#   lista_livros = db.get_lista_livros()
-#   return render_template('books.html', data=lista_livros)
-
-
-
-
-# @app.route('/logout')
-# def logout():
-#   db.set_user('')
-#   return redirect('/index')

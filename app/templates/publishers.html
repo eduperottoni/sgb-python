@@ -2,11 +2,11 @@
 
 {% block publishers %}
   <main class="books-list">
-    <a href="/publishers/create" class="btn-green mtop-2">
-      <button class="btn btn-green">Criar editora</button>
+    <a href="/publishers/create" class="btn-blue mtop-2">
+      <button class="btn btn-blue">Criar editora</button>
     </a>
     <section class="books-theme">
-      <h2>Editoras parceiras</h2>
+      <h2>Editoras cadastradas</h2>
       {% set flashed = get_flashed_messages() %} 
       {% if flashed %}
         {% for msn in flashed %}
@@ -26,7 +26,7 @@
             <a href="/publishers/update/{{publisher.get_id()}}" class="mtop-2 btn-yellow">
               <button class="btn btn-yellow">Alterar</button>
             </a>
-            <a href="/publishers/delete/{{publisher.get_id()}}" class="mtop-2 btn-red">
+            <a href="/publishers/delete/{{publisher.get_id()}}" class="btn-red">
               <button class="btn btn-red">Deletar</button>
             </a>
           </div>
