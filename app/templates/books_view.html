@@ -11,52 +11,46 @@
   <title>SGB | Lista de Livros</title>
 </head>
 <body>
-  {% block books_options%}
-  
-  {% endblock %}
-  <h1>Lista de Livros</h1>
+  <h1 style="padding-top:20px">Lista de livros disponíveis</h1>
   <main class="books-list">
-    <section class="books-theme">
-      <h2>Livros de Assunto</h2>
-      <div class="books">
-        <div class="book">
-          <h1 class="book-title">Título</h1>
-          <h4 class="book-author">Autor: </h4>
-          <article class="book-bio">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
-          </article>
-          <button class="btn btn-yellow">Detalhes</button>
+    {% for key, genre in supergenres.items() %}
+      <section class="books-theme">
+        <h2>Livros de {{genre}}</h2>
+        <div class="books">
+          {% for book in books_list %}
+            {% if book %}
+              {% if book.get_supergenre() == key %}
+                <div class="book">
+                  <h2 class="book-title">{{book.get_title()}}</h2>
+                  <hr>
+                  <h4 class="book-publisher"> Editora: {{book.get_publisher().get_corp_name()}}</h4>
+                  <hr>
+                  <h4 class="book-author">Autor: {{book.get_author()}}</h4>
+                  <hr>
+                  <h4 class="book-leased">Alugados: {{book.get_leased_amount()}}</h4>
+                  <hr>
+                  <h4 class="book-available">Disponíveis: {{book.get_available_amount()}}</h4>
+                  <h4></h4>
+                  <article class="book-bio">{{book.get_bio()}}</article>
+                  <a href="/books/{{book.get_id()}}" class="mtop-2 mbottom-1 btn-yellow">
+                    <button class="btn btn-yellow">Detalhes</button>
+                  </a>
+                </div>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
         </div>
-        <div class="book">
-          <h1 class="book-title">Título</h1>
-          <h4 class="book-author">Autor: </h4>
-          <article class="book-bio">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
-          </article>
-          <button class="btn btn-yellow">Detalhes</button>
-        </div>
-        <div class="book">
-          <h1 class="book-title">Título</h1>
-          <h4 class="book-author">Autor: </h4>
-          <article class="book-bio">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
-          </article>
-          <button class="btn btn-yellow">Detalhes</button>
-        </div>
-        <div class="book">
-          <h1 class="book-title">Título</h1>
-          <h4 class="book-author">Autor: </h4>
-          <article class="book-bio">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur voluptatum, modi at aspernatur, nulla voluptates, odit totam labore cupiditate repellendus unde minus est? Dicta dignissimos vel consequuntur voluptatibus enim. Veniam.
-          </article>
-          <button class="btn btn-yellow">Detalhes</button>
-        </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    {% endfor %}
+
+    <a class="btn-red mtop-2 mbottom-2" href="/books">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </main>  
+  
 
   {% block back%}
-
+  
   {% endblock %}
 </body>
 </html>

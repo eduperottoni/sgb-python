@@ -53,6 +53,48 @@
       {% endfor %}
     </main>  
   {% else %}
+    {% set flashed = get_flashed_messages() %} 
+    {% if flashed %}
+      {% for msn in flashed %}
+        <div class="span-success">
+          <p>{{msn}}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <main class="books-list" style="padding-top:2rem">
+      <h1>Livros disponíveis para alugar</h1>
+      {% for key, genre in supergenres.items() %}
+        <section class="books-theme">
+          <h2>Livros de {{genre}}</h2>
+          <div class="books">
+            {% for book in books_list %}
+              {% if book %}
+                {% if book.get_available_amount() > 0 %}
+                  {% if book.get_supergenre() == key %}
+                    <div class="book">
+                      <h2 class="book-title">{{book.get_title()}}</h2>
+                      <hr>
+                      <h4 class="book-publisher"> Editora: {{book.get_publisher().get_corp_name()}}</h4>
+                      <hr>
+                      <h4 class="book-author">Autor: {{book.get_author()}}</h4>
+                      <hr>
+                      <h4 class="book-leased">Alugados: {{book.get_leased_amount()}}</h4>
+                      <hr>
+                      <h4 class="book-available">Disponíveis: {{book.get_available_amount()}}</h4>
+                      <h4></h4>
+                      <article class="book-bio">{{book.get_bio()}}</article>
+                      <a href="/books/{{book.get_id()}}" class="mtop-2 btn-yellow">
+                        <button class="btn btn-yellow">Detalhes</button>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </section>
+      {% endfor %}
+    </main>  
   {% endif %}
 
 {% endblock %}

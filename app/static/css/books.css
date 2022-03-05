@@ -38,6 +38,12 @@ div.book{
   border: 2px solid #4d99fde8;
 }
 
+div.book{
+  background:rgba(179, 227, 255, 0.521);
+  border: 2px solid #4d99fde8;
+}
+
+
 
 div.book h2{
   min-height: 64px;

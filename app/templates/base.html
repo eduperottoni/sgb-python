@@ -17,12 +17,12 @@
   {% if usertype == 'client' %}
   <header>
     <div class="profile">
-      <p><strong>Cliente:</strong> {{user}}</p>
+      <p><strong>Cliente:</strong> {{user.get_name()}}</p>
     </div>
     <nav class="menu">
       <ul>
         <li><a href="/profile">Perfil</a></li>
-        <li><a href="/main">Livros</a></li>
+        <li><a href="/books">Livros</a></li>
         <li><a href="/return">Devolução</a></li>
       </ul>
     </nav>
@@ -35,7 +35,7 @@
     <nav class="hamburguer">
       <ul>
         <li><a href="/profile">Perfil</a></li>
-        <li><a href="/main">Livros</a></li>
+        <li><a href="/books">Livros</a></li>
         <li><a href="/return">Devolução</a></li>
       </ul>
       <button onclick="closeMenu()" class="btn btn-blue" style="min-width:100px;">Fechar</button>
@@ -44,12 +44,12 @@
   {% elif usertype == 'student' %}
   <header>
     <div class="profile">
-      <p><strong>Estudante:</strong> {{user}}</p>
+      <p><strong>Estudante:</strong> {{user.get_name()}}</p>
     </div>
     <nav class="menu">
       <ul>
         <li><a href="/profile">Perfil</a></li>
-        <li><a href="/main">Livros</a></li>
+        <li><a href="/books">Livros</a></li>
         <li><a href="/return">Devolução</a></li>
       </ul>
     </nav>
@@ -71,7 +71,7 @@
   {% else %}
   <header>
     <div class="profile">
-      <p><strong>Funcionário:</strong> {{user}}</p>
+      <p><strong>Funcionário:</strong> {{user.get_name()}}</p>
     </div>
     <nav class="menu">
       <ul>

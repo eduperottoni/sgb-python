@@ -11,6 +11,15 @@ from app.utils.validations.book_create_validation import book_create_validation
 from app.utils.validations.book_update_validation import book_update_validation
 from app.utils.validations.book_delete_validation import book_delete_validation
 
+#Rota de visualização da lista de livros
+@app.route('/books/view')
+def show_books():
+  db.set_user('')
+  db.set_usertype('')
+  db.set_logged('')
+  books_list = db.get_books_list()
+  return render_template('books_view.html', books_list=books_list, supergenres=supergenres)
+
 #Rota principal dos livros
 @app.route('/books')
 def books():
@@ -26,17 +35,18 @@ def books():
 @app.route('/books/', defaults={'book_id':None})
 @app.route('/books/<book_id>')
 def book_details(book_id):
-  if db.get_logged():
-    if book_id == None or int(book_id) > len(db.get_books_list())-1:
-      return redirect('/books')
-    else:
-      index = int(book_id)
-      book = db.get_book_from_list(index)
-      usertype = db.get_usertype()
-      user = db.get_user()
-      return render_template('book_details.html', book=book, usertype=usertype, user=user)
+  if book_id == None or int(book_id) > len(db.get_books_list())-1:
+    return redirect('/books')
   else:
-    return redirect('/index')
+    index = int(book_id)
+    book = db.get_book_from_list(index)
+    usertype = db.get_usertype()
+    user = db.get_user()
+    is_logged = db.get_logged()
+    if user != '': len_rented = len(user.get_rented())
+    else: len_rented = ''
+    return render_template('book_details.html', is_logged=is_logged, book=book, usertype=usertype, user=user, len_rented=len_rented)
+
 
 #Rota de criação de livro - escolha de supergênero
 @app.route('/books/create')

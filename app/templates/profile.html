@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block clients %}
+  <div class="container padding-top-2">
+    <main>
+      <h2>Perfil de {{user.get_name()}}</h2>
+      <h4>Para alterar os dados do perfil procure um funcionário</h4>
+      <form>
+        <label for="name">
+          Nome:
+          <input value="{{user.get_name()}}" type="text" id="name" name="name" disabled>
+        </label>
+        {% if usertype == 'student' %}
+          <label for="student-id-card">
+            Código da Carteira de Estudante:
+            <input value="{{user.get_student_id_card()}}" type="text" id="student-id-card" name="student-id-card"disabled>
+          </label>
+        {% endif %}
+        <label for="cpf">
+          CPF:
+          <input value="{{user.get_cpf()}}" type="text" id="cpf" name="cpf"disabled>
+        </label>
+        <label for="birthdate">
+          Data de Nascimento:
+          <input value="{{user.get_birth_date()}}" type="text" id="birthdate" name="birthdate"disabled>
+        </label>
+        <label for="password">
+          Senha:
+          <input value="{{user.get_password()}}" type="password" id="password" name="password"disabled>
+        </label>
+        <label for="max-number">
+          Máximo de  livros a alugar:
+          {% if usertype == 'student' %}
+            <input value="5" type="text" name="max-number" id="max-number" disabled>
+          {% else %}
+            <input value="3" type="text" name="max-number" id="max-number" disabled>
+          {% endif %}
+        </label>
+        <label for="">
+          Livros alugados:
+          <ul>
+            {% for book in user.get_rented() %}
+              <li>{{book.get_title()}}</li>
+            {% endfor %}
+          </ul>
+        </label>
+      </form>
+
+      <a class="btn-red mtop-2" href="/main">
+        <button class="btn btn-red">Voltar</button>
+      </a>
+    </main>
+  </div>
+{% endblock %}

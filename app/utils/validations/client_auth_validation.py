@@ -1,7 +1,7 @@
 from flask import flash, redirect
 from classes.db import db
 
-def client_auth_validation(t, char, password):
+def client_auth_validation(type, char, password):
 	if char == '' or password == '':
 		flash('Campo(s) vazios :(')
 		return False
@@ -17,11 +17,11 @@ def client_auth_validation(t, char, password):
 			return False  
 	 
 		else:
-			if db.get_people_dict()[(t+"s")]:
-				for i in db.get_people_dict()[(t+"s")]:
+			if db.get_people_dict()[(type+"s")]:
+				for i in db.get_people_dict()[(type+"s")]:
 					if user == i.get_cpf() and password == i.get_password(): 
-						db.set_usertype(t)
-						db.set_user(i.get_name())
+						db.set_usertype(type)
+						db.set_user(i)
 						db.set_logged(True)
 						return True
 

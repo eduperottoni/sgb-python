@@ -20,7 +20,7 @@ def employee_auth_validation(char, password):
 			for i in db.get_people_dict()['employees']:
 				if user == i.get_employee_code() and password == i.get_password(): 
 					db.set_usertype('employee')
-					db.set_user(i.get_name())
+					db.set_user(i)
 					db.set_logged(True)
 					return True
 

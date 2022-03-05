@@ -3,7 +3,7 @@ from classes.publisher import Publisher
 from classes.person import Student, Client, Employee
 
 class DB():
-  def __init__(self, books_list=[], user='', username='', usertype='', people_dict={}, publishers_list=[]):
+  def __init__(self, books_list=[], user='', username='', usertype='', publishers_list=[]):
     self.user = user
     self.username = username
     self.usertype = usertype

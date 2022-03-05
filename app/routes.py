@@ -3,6 +3,7 @@
 from app import app
 from app import routes_publishers
 from app import routes_books
+from app import routes_clients
 
 from flask import render_template, request, flash, redirect
 
@@ -73,25 +74,25 @@ def login_employee():
   db.set_logged('')
   return render_template('login_employee.html')
 
-#Rota de validação de login dos clientee e funcinários
+#Rota de validação de login dos clientes e funcinários
 @app.route('/auth/client', methods=['POST'])
 def auth_client():
   if client_auth_validation('client', request.form.get('user'), request.form.get('password')):
-    return redirect('/main')
+    return redirect('/books')
   else:
   	return redirect('/login/client')
 
 @app.route('/auth/student', methods=['POST'])
 def auth_student():
   if client_auth_validation('student', request.form.get('user'), request.form.get('password')):
-    return redirect('/main')
+    return redirect('/books')
   else:
   	return redirect('/login/student') 
 
 @app.route('/auth/employee', methods=['POST'])
 def auth_employee():
   if employee_auth_validation(request.form.get('id-employee'), request.form.get('password')):
-    return redirect('/main')
+    return redirect('/books')
   else:
   	return redirect('/login/employee')
 
@@ -129,7 +130,7 @@ def clients_create():
 
 @app.route('/clients/create/auth', methods=['POST'])
 def clients_create_auth():
-  validation_dict = client_create_validation(request.form.get('name'), request.form.get('cpf'), request.form.get('birth_date'), request.form.get('password'), request.form.get('client-student'), request.form.get('student_id_card'))
+  validation_dict = client_create_validation(request.form.get('name'), request.form.get('cpf'), request.form.get('birth_date'), request.form.get('password'), request.form.get('client-student') , request.form.get('student_id_card'))
   if validation_dict['valid']:
     flash(validation_dict['message'])
     return redirect('/clients')
@@ -190,11 +191,6 @@ def clients_delete_auth(client_type, indice):
     return redirect('/clients')
   else:
     return redirect(f'/clients/delete/{client_type}/{indice}')
-   
-#Rota de visualização da lista de livros
-@app.route('/books/view')
-def show_books():
-  return render_template('books_view.html')
 
 #Rota de logout
 @app.route('/logout')

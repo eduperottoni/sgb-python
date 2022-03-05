@@ -1,8 +1,107 @@
-{% extends 'base.html' %}
+{% if is_logged %}
+  {% extends 'base.html' %}
+  {% block books%}
+    <div class="container padding-top-2">
+      <main>
+        <h2>Detalhes do livro <br/>{{book.get_title()}}</h2>
 
-{% block books%}
-  <div class="container padding-top-2">
-    <main>
+        <form>
+          <label for="id">
+            Id:
+            <input value="{{book.get_id()}}" type="text" id="id" name="id" disabled>
+          </label>
+          <label for="title">
+            Título:
+            <input value="{{book.get_title()}}" type="text" id="title" name="title"disabled>
+          </label>
+          <label for="publisher">
+            Editora:
+            <input value="{{book.get_publisher().get_corp_name()}}" type="text" id="publisher" name="publisher"disabled>
+          </label>
+          <label for="author">
+            Autor:
+            <input value="{{book.get_author()}}" type="text" id="author" name="author"disabled>
+          </label>
+          <label for="author">
+            Ano:
+            <input value="{{book.get_year()}}" type="text" id="year" name="year"disabled>
+          </label>
+          <label for="supergenre">
+            Gênero:
+            <input value="{{book.get_supergenre()}}" type="text" id="supergenre" name="supergenre"disabled>
+          </label>
+          <label for="subgenre">
+            Sub-gênero:
+            <input value="{{book.get_subgenre()}}" type="text" id="subgenre" name="subgenre"disabled>
+          </label>
+          <label for="subgenre">
+            Bio:
+            <textarea type="text" id="bio" name="bio"disabled >{{book.get_bio()}}</textarea>
+          </label>
+          <label for="pgs-number">
+            Número de páginas:
+            <input value="{{book.get_pgs_number()}}" type="text" id="pgs-number" name="pgs-number"disabled>
+          </label>
+          <label for="total-amount">
+            Quantidade total:
+            <input value="{{book.get_total_amount()}}" type="text" id="total-amount" name="total-amount"disabled>
+          </label>
+          <label for="leased-amount">
+            Quantidade alugada:
+            <input value="{{book.get_leased_amount()}}" type="text" id="leased-amount" name="leased-amount"disabled>
+          </label>
+          <label for="available-amount">
+            Quantidade disponível:
+            <input value="{{book.get_available_amount()}}" type="text" id="available-amount" name="available-amount"disabled>
+          </label>
+        </form>
+        {% if usertype == 'employee' %}
+          <a class="btn-blue mtop-2" href="/books/update/{{book.get_id()}}">
+            <button class="btn btn-blue">Alterar livro</button>
+          </a>
+          <a class="btn-red mtop-1" href="/books/delete/{{book.get_id()}}">
+            <button class="btn btn-red">Deletar livro</button>
+          </a>
+        {% else %}
+          {% if book not in user.get_rented()%}
+            {% if (usertype == 'client' and len_rented < 3) %}
+              <a class="btn-blue mtop-2" href="/rent/{{book.get_id()}}">
+                <button class="btn btn-blue">Alugar livro</button>
+              </a>
+            {% elif (usertype == 'student' and len_rented < 5) %}
+              <a class="btn-blue mtop-2" href="/rent/{{book.get_id()}}">
+                <button class="btn btn-blue">Alugar livro</button>
+              </a>
+            {% else %}
+              <h4>Você alugou o número máximo de livros!</h4>
+            {% endif %}
+          {% else %}
+            <h4>Você está com esse livro no momento!</h4>
+          {% endif %}
+        {% endif %}
+      </main>
+
+      <a class="btn-red mtop-2" href="/books">
+        <button class="btn btn-red">Voltar</button>
+      </a>
+    </div>
+  {% endblock %}
+{% else %}
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGB | {{usertype.title()}}</title>
+
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/templates.css') }} ">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/header.css') }} ">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/footer.css') }} ">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/base.css') }} ">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/books.css') }} ">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/form.css') }}">
+  </head>
+  <body style="padding:1rem 0;">
+    <main style="margin:0 auto;">
       <h2>Detalhes do livro <br/>{{book.get_title()}}</h2>
 
       <form>
@@ -55,20 +154,13 @@
           <input value="{{book.get_available_amount()}}" type="text" id="available-amount" name="available-amount"disabled>
         </label>
       </form>
-
-      <a class="btn-blue mtop-2" href="/books/update/{{book.get_id()}}">
-        <button class="btn btn-blue">Alterar livro</button>
-      </a>
-      <a class="btn-red mtop-1" href="/books/delete/{{book.get_id()}}">
-        <button class="btn btn-red">Deletar livro</button>
-      </a>
     </main>
 
-    <a class="btn-red mtop-2" href="/books">
+    <a class="btn-red mtop-2" href="/index">
       <button class="btn btn-red">Voltar</button>
     </a>
-  </div>
-{% endblock %}
+  </body>
+{% endif %}
 
 
   

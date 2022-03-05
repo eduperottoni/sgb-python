@@ -50,8 +50,8 @@ class Client(Person):
   def get_rented(self):
     return self.rented
     
-  def get_max_number():
-    return 3
+  # def get_max_number():
+  #   return 3
   	
   def set_rented(self, rented):
     self.rented = rented
@@ -62,7 +62,11 @@ class Client(Person):
   		
   # book é um objeto 
   def rent(self, book):
-    self.rented.append(book)
+    if len(self.rented) < 3:
+      self.rented.append(book)
+      return {'valid':True, 'message':'Livro alugado :)'}
+    else:
+      return {'valid':False,'message':'Número máximo de livros já alugados :('}
   
   def to_return(self, book):
     self.rented.remove(book)
@@ -77,8 +81,16 @@ class Student(Client):
     return self.student_id_card
   
   # polimorfismo
-  def get_max_number():
-    return 5
+  # def get_max_number():
+  #   return 5
   
   def set_student_id_card(self, student_id_card):
     self.student_id_card = student_id_card
+
+  # polimorfismo
+  def rent(self, book):
+    if len(self.rented) < 5:
+      self.rented.append(book)
+      return {'valid':True, 'message':'Livro alugado :)'}
+    else:
+      return {'valid':False,'message':'Número máximo de livros já alugados :('}
