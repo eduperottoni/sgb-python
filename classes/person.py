@@ -65,8 +65,10 @@ class Client(Person):
     if len(self.rented) < 3:
       self.rented.append(book)
       return {'valid':True, 'message':'Livro alugado :)'}
-    else:
+    elif len(self.rented == 3):
       return {'valid':False,'message':'Número máximo de livros já alugados :('}
+    elif book in self.rented:
+      return {'valid':False, 'message':'Você já possui esse livro'}
   
   def to_return(self, book):
     self.rented.remove(book)
@@ -92,5 +94,7 @@ class Student(Client):
     if len(self.rented) < 5:
       self.rented.append(book)
       return {'valid':True, 'message':'Livro alugado :)'}
-    else:
+    elif len(self.rented == 5):
       return {'valid':False,'message':'Número máximo de livros já alugados :('}
+    elif book in self.rented:
+      return {'valid':False, 'message':'Você já possui esse livro'}
