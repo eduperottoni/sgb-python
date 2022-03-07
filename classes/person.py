@@ -49,9 +49,6 @@ class Client(Person):
 
   def get_rented(self):
     return self.rented
-    
-  # def get_max_number():
-  #   return 3
   	
   def set_rented(self, rented):
     self.rented = rented
@@ -64,7 +61,7 @@ class Client(Person):
   def rent(self, book):
     if len(self.rented) < 3:
       self.rented.append(book)
-      return {'valid':True, 'message':'Livro alugado :)'}
+      return {'valid':True, 'message':f'Livro {book.get_title()} alugado :)'}
     elif len(self.rented == 3):
       return {'valid':False,'message':'Número máximo de livros já alugados :('}
     elif book in self.rented:
@@ -82,10 +79,6 @@ class Student(Client):
   def get_student_id_card(self):
     return self.student_id_card
   
-  # polimorfismo
-  # def get_max_number():
-  #   return 5
-  
   def set_student_id_card(self, student_id_card):
     self.student_id_card = student_id_card
 
@@ -93,7 +86,7 @@ class Student(Client):
   def rent(self, book):
     if len(self.rented) < 5:
       self.rented.append(book)
-      return {'valid':True, 'message':'Livro alugado :)'}
+      return {'valid':True, 'message':f'Livro {book.get_title()} alugado :)'}
     elif len(self.rented == 5):
       return {'valid':False,'message':'Número máximo de livros já alugados :('}
     elif book in self.rented:

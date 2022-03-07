@@ -50,22 +50,6 @@ def login():
   db.set_logged('')
   return render_template('login.html')
 
-#Rota de login de cliente
-@app.route('/login/client')
-def login_client():
-  db.set_user('')
-  db.set_usertype('')
-  db.set_logged('')
-  return render_template('login_client.html')
-
-#Rota de login de cliente
-@app.route('/login/student')
-def login_student():
-  db.set_user('')
-  db.set_usertype('')
-  db.set_logged('')
-  return render_template('login_student.html')
-
 #Rota de login do funcionário
 @app.route('/login/employee')
 def login_employee():

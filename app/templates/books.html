@@ -13,6 +13,7 @@
         <button class="btn btn-blue">Criar Sub-gênero</button>
       </a>
     </nav>
+    <h1>Livros do acervo</h1>
     {% set flashed = get_flashed_messages() %} 
     {% if flashed %}
       {% for msn in flashed %}
@@ -53,16 +54,16 @@
       {% endfor %}
     </main>  
   {% else %}
-    {% set flashed = get_flashed_messages() %} 
-    {% if flashed %}
-      {% for msn in flashed %}
-        <div class="span-success">
-          <p>{{msn}}</p>
-        </div>
-      {% endfor %}
-    {% endif %}
     <main class="books-list" style="padding-top:2rem">
       <h1>Livros disponíveis para alugar</h1>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for msn in flashed %}
+          <div class="span-success">
+            <p>{{msn}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
       {% for key, genre in supergenres.items() %}
         <section class="books-theme">
           <h2>Livros de {{genre}}</h2>
