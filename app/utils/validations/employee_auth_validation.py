@@ -3,8 +3,7 @@ from classes.db import db
 
 def employee_auth_validation(char, password):
 	if char == '' or password == '':
-		flash('Campo(s) vazios!')
-		return False
+		return {'valid':False, 'message':'Campo(s) vazios :('}
 	
 	else:	
 		user = ''
@@ -13,8 +12,7 @@ def employee_auth_validation(char, password):
 				user+=i
 				
 		if len(user) != 5:
-			flash('ID inválido!')
-			return False
+			return {'valid':False, 'message':'ID inválido :('}
 			
 		else:
 			for i in db.get_people_dict()['employees']:
@@ -22,7 +20,6 @@ def employee_auth_validation(char, password):
 					db.set_usertype('employee')
 					db.set_user(i)
 					db.set_logged(True)
-					return True
+					return {'valid':True}
 
-			flash('Id ou senha inválidos!')
-			return False
+			return {'valid':False, 'message':'Id ou senha inválidos :('}

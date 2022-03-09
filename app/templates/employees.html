@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block clients %}
+  {% if usertype == 'employee' %}
+    <nav>
+      <a class="btn-blue mtop-2 mbottom-2" href="/employees/special/auth/create/{{None}}">
+        <button class="btn btn-blue">Criar Funcionário</button>
+      </a>
+    </nav>
+    <main class="books-list">
+      <section class="books-theme">
+        <h2>Funcionários cadastrados no sistema</h2>
+        {% set messages = get_flashed_messages() %} 
+				  {% if messages %}
+				    {% for msn in messages %}
+				      <div class="span-success">
+				        <p>{{msn}}</p>
+				      </div>
+				    {% endfor %}
+				  {% endif %}
+        <div class="books">
+          {% for i in people_dict['employees'] %}
+            {% if i %}
+              <div class="book">
+                <h2 class="person-name">Nome: {{i.get_name()}}</h2>
+                <h3 class="person-name">ID: {{i.get_employee_code()}}</h3>
+                <hr>
+                <h4 class="person-cpf">CPF: {{i.get_cpf()}}</h4>
+                <br>
+                <a href="/employees/special/auth/update/{{people_dict['employees'].index(i)}}">
+                  <button class="btn btn-yellow">Atualizar</button>
+                </a>
+                <a href="/employees/special/auth/delete/{{people_dict['employees'].index(i)}}">
+                  <button class="btn btn-red">Excluir</button>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+    </main>  
+  {% else %}
+  {% endif %}
+
+{% endblock %}
+
+{% block back %}
+  <a class="btn-red mtop mbottom-2" href="/books">
+    <button class="btn btn-red">Voltar</button>
+  </a>
+{% endblock %}

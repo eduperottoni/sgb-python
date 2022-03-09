@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block books %}
+  {% if usertype == 'employee' %}
+		<div class="container padding-top-2">
+			<main>
+				<h1>Cadastro de novos funcionários</h1>
+				  {% set messages = get_flashed_messages() %} 
+				  {% if messages %}
+				    {% for msn in messages %}
+				      <div class="span-error">
+				        <p>{{msn}}</p>
+				      </div>
+				    {% endfor %}
+				  {% endif %}
+				<form action="/employees/create/auth" method="post">
+					<label for="name">
+				    Nome:
+				    <input placeholder="Digite o nome" type="text" name="name" id="name">
+				  </label>
+				  <label for="id">
+				    ID de funcionário:
+				    <input placeholder="Digite o ID" type="number" name="id" id="id">
+				  </label>
+				  <label for="cpf">
+				    CPF:
+				    <input placeholder="Digite o CPF" type="text" name="cpf" id="cpf">
+				  </label>
+				  <label for="birth_date">
+				    Data de nascimento:
+				    <input placeholder="Data de nascimento" type="date" name="birth_date" id="birth_date">
+				  </label>
+				  <label for="password">
+				    Senha:
+				    <input placeholder="Digite sua senha" type="password" name="password" id="password">
+				  </label>
+				  <button class="btn btn-green" type="submit">Cadastrar funcionário</button>
+				</form>
+			</main>
+		</div>
+	{% else %}
+{% endif %}
+
+{% endblock %}
+
+{% block back %}
+  <a class="btn-red mtop mbottom-2" href="/clients">
+    <button class="btn btn-red">Voltar</button>
+  </a>
+{% endblock %}
+

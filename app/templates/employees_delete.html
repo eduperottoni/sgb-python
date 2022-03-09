@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block clients %}
+<div class="container padding-top-10">
+  <main>
+    <h2>Você realmente deseja deletar {{employee.get_name()}}?</h2>
+    {% set flashed = get_flashed_messages() %} 
+    {% if flashed %}
+      {% for m in flashed %}
+        <div class="span-error">
+          <p>{{m}}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <a class='btn-blue' href="/employees">
+      <button class="btn btn-blue">Cancelar</button>
+    </a>
+    <a class="btn-red" href="/employees/delete/auth/{{indice}}">
+      <button class="btn btn-red">Deletar</button>
+    </a>
+  </main>
+</div>
+{% endblock %}
