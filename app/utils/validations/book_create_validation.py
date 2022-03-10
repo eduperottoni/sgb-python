@@ -1,6 +1,5 @@
 from classes.db import db
 
-
 def book_create_validation(title, publisher, author, year, bio, pgs_number, total_amount):
   exists = False
   for book in db.get_books_list():

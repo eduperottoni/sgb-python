@@ -8,17 +8,17 @@ def employee_create_validation(name, code, cpf, birth_date, password):
 		for person in db.get_people_dict()[i]:
 			if person:
 				if person.get_cpf() == cpf:
-					return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+					return {'valid':False,'message':'Esse CPF já está cadastrado :('}
 				
 	employees_list = db.get_people_dict()['employees']
 	if len(employees_list) != 0:
 		for employee in employees_list:
 			if employee:
 				if employee.get_cpf() == cpf:
-					return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+					return {'valid':False,'message':'Esse CPF já está cadastrado :('}
 				elif employee.get_employee_code() == code:
-				  return {'valid':False,'message':'Esse ID já está cadastrado :('}
-	
+					return {'valid':False,'message':'Esse ID já está cadastrado :('}
+
 	if name == '' or code == '' or cpf == '' or birth_date == '' or password == '':
 		return{'valid':False, 'message':'Campos vazios :('}
 	
@@ -38,6 +38,6 @@ def employee_create_validation(name, code, cpf, birth_date, password):
 			return{'valid':False, 'message':'ID de funcionário inválido! Digite os 5 dígitos :('}
 			
 		else:
-			db.add_people_to_dict(Employee(name=name, cpf=user, birth_date=birth_date, password=password, employee_code=code), 'employees')  
-			return{'valid':True, 'message':'Funcionário cadastrado com sucesso :)'}
+			db.add_people_to_dict(Employee(name=name.title(), cpf=user, birth_date=birth_date, password=password, employee_code=code), 'employees')  
+			return{'valid':True, 'message':f'Funcionário {name.title()} cadastrado com sucesso :)'}
 

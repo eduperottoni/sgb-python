@@ -40,23 +40,23 @@
               </div>
             {% endif %}
           {% endfor %}
-          {% for i in people_dict['students'] %}
-            {% if i %}
+          {% for student in people_dict['students'] %}
+            {% if student %}
               <div class="book">
-                <h2 class="person-name">Nome: {{i.get_name()}}</h2>
+                <h2 class="person-name">Nome: {{student.get_name()}}</h2>
                 <h3>Estudante</h3>
                 <hr>
-                <h4 class="person-cpf">CPF: {{i.get_cpf()}}</h4>
+                <h4 class="person-cpf">CPF: {{student.get_cpf()}}</h4>
                 <hr>
                 <h4>Livros alugados: </h4>
-                {% for j in i.get_rented()%}
-                  <article class="rented">{{j}}</article>
+                {% for book in student.get_rented()%}
+                  <article class="rented">{{book.get_title()}}</article>
                 {% endfor %}
                 <hr>
-                <a href="/clients/update/students/{{people_dict['students'].index(i)}}">
+                <a href="/clients/update/students/{{people_dict['students'].index(student)}}">
                   <button class="btn btn-yellow">Atualizar</button>
                 </a>
-                <a href="/clients/delete/students/{{people_dict['students'].index(i)}}">
+                <a href="/clients/delete/students/{{people_dict['students'].index(student)}}">
                   <button class="btn btn-red">Excluir</button>
                 </a>
               </div>

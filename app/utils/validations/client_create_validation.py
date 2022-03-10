@@ -13,7 +13,7 @@ def client_create_validation(name, cpf, birth_date, password, is_student, studen
 		for person in db.get_people_dict()[i]:
 			if person:
 				if person.get_cpf() == cpf and i != client_type:
-					return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+					return {'valid':False,'message':'Esse CPF já está cadastrado :('}
 				
 	students_list = db.get_people_dict()['students']
 	if len(students_list) != 0:
@@ -29,7 +29,7 @@ def client_create_validation(name, cpf, birth_date, password, is_student, studen
 		for client in clients_list:
 			if client:
 				if client.get_cpf() == cpf:
-					return {'valid':False,'message':'Esse cpf já está cadastrado:('}
+					return {'valid':False,'message':'Esse CPF já está cadastrado:('}
 	
 	##estudantes				
 	if client_type == 'students':
@@ -52,8 +52,8 @@ def client_create_validation(name, cpf, birth_date, password, is_student, studen
 				return{'valid':False, 'message':'Carteirinha de estudante inválida! Digite os 6 dígitos :('}
 				
 			else:
-				db.add_people_to_dict(Student(name=name, cpf=user, birth_date=birth_date, password=password, student_id_card=student_id_card), 'students')  
-				return{'valid':True, 'message':'Estudante cadastrado com sucesso :)'}
+				db.add_people_to_dict(Student(name=name.title(), cpf=user, birth_date=birth_date, password=password, student_id_card=student_id_card), 'students')  
+				return{'valid':True, 'message':f'Estudante {name.title()} cadastrado com sucesso :)'}
 
 	##clientes
 	else:
@@ -70,5 +70,5 @@ def client_create_validation(name, cpf, birth_date, password, is_student, studen
 				return{'valid':False, 'message':'CPF inválido :('}  
 		 
 			else:
-				db.add_people_to_dict(Client(name=name, cpf=user, birth_date=birth_date, password=password), 'clients')
-				return{'valid':True, 'message':'Cliente cadastrado com sucesso :)'}   
+				db.add_people_to_dict(Client(name=name.title(), cpf=user, birth_date=birth_date, password=password), 'clients')
+				return{'valid':True, 'message':f'Cliente {name.title()} cadastrado com sucesso :)'}   

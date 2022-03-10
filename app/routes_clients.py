@@ -126,6 +126,7 @@ def clients_delete_auth(client_type, indice):
     flash(validation_dict['message'])
     return redirect('/clients')
   else:
+    flash(validation_dict['message'])
     return redirect(f'/clients/delete/{client_type}/{indice}')
 
 @app.route('/profile')

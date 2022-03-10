@@ -43,7 +43,7 @@ def book_details(book_id):
     usertype = db.get_usertype()
     user = db.get_user()
     is_logged = db.get_logged()
-    if user != '': len_rented = len(user.get_rented())
+    if user != '' and usertype != 'employee' : len_rented = len(user.get_rented())
     else: len_rented = ''
     return render_template('book_details.html', is_logged=is_logged, book=book, usertype=usertype, user=user, len_rented=len_rented)
 

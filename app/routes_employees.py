@@ -23,10 +23,12 @@ def login_employee():
 
 @app.route('/auth/employee', methods=['POST'])
 def auth_employee():
-  if employee_auth_validation(request.form.get('id-employee'), request.form.get('password')):
+  valid_dict = employee_auth_validation(request.form.get('id-employee'), request.form.get('password'))
+  if valid_dict['valid']:
     return redirect('/books')
   else:
-  	return redirect('/login/employee')
+    flash(valid_dict['message'])
+    return redirect('/login/employee')
 
 @app.route('/employees')
 def employees():
@@ -100,8 +102,6 @@ def employees_update_auth(indice):
   else:
     flash(validation_dict['message'])
     return redirect(f'/employees/update/{indice}')
-    
-    
     
 @app.route('/employees/delete/', defaults={'indice':None})
 @app.route('/employees/delete/<indice>')

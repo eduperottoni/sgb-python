@@ -36,7 +36,7 @@ def book_update_validation(book, title, publisher, author, year, bio, pgs_number
     return {'valid':False, 'message':'Número de páginas inválido :('}
   elif total_amount not in range (1,100):
     return {'valid':False, 'message':'Quantidade total deve estar entre 1 e 100 :('}
-  elif total_amount <= book.get_leased_amount():
+  elif total_amount < book.get_leased_amount():
     return {'valid':False, 'message':f'Quantidade total deve estar entre {book.get_leased_amount()} e 100 :('}
   else:
     return {'valid':True, 'message':f'Livro {title} alterado com sucesso :)'}

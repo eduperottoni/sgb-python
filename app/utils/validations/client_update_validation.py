@@ -9,7 +9,7 @@ def client_update_validation(indice, client_type, name, cpf, birth_date, passwor
 		for person in db.get_people_dict()[i]:
 			if person:
 				if person.get_cpf() == cpf and i != client_type:
-					return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+					return {'valid':False,'message':'Esse CPF já está cadastrado :('}
 
 	clients_list = db.get_people_dict()[client_type]
 	if len(clients_list) != 0:
@@ -17,7 +17,7 @@ def client_update_validation(indice, client_type, name, cpf, birth_date, passwor
 		for client in clients_list:
 			index += 1
 			if person.get_cpf() == cpf and index != int(indice):
-				return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+				return {'valid':False,'message':'Esse CPF já está cadastrado :('}
 			elif client_type == 'students':
 				if client.get_student_id_card() == student_id_card and index != int(indice):
 					return {'valid':False,'message':'Número de carteirinha repetido :('}  
@@ -39,7 +39,7 @@ def client_update_validation(indice, client_type, name, cpf, birth_date, passwor
 				return {'valid':False,'message':'CPF inválido :('}   
 			
 			elif len(student_id_card) != 6:
-				return {'valid':False,'message':'Carteirinha de estudante inválida! Digite os 6 dígitos:('} 
+				return {'valid':False,'message':'Carteirinha de estudante inválida! Digite os 6 dígitos :('} 
 		 		
 			else:
 				client = db.get_people_dict()[client_type][int(indice)]
@@ -71,4 +71,4 @@ def client_update_validation(indice, client_type, name, cpf, birth_date, passwor
 				client.set_birth_date(birth_date)
 				client.set_password(password)
 				
-				return {'valid':True,'message':'Cliente modificado com sucesso :)'}  
+				return {'valid':True,'message':f'Cliente {name} modificado com sucesso :)'}  
