@@ -3,12 +3,13 @@ from classes.db import db
 from classes.person import Student, Client
 
 def client_update_validation(indice, client_type, name, cpf, birth_date, password, student_id_card=None):
+	#validação dos cpf de todos
 	person_type = ["employees", "clients", "students"]
-
 	for i in person_type:
 		for person in db.get_people_dict()[i]:
-			if person.get_cpf() == cpf and i != client_type:
-				return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+			if person:
+				if person.get_cpf() == cpf and i != client_type:
+					return {'valid':False,'message':'Esse cpf já está cadastrado :('}
 
 	clients_list = db.get_people_dict()[client_type]
 	if len(clients_list) != 0:

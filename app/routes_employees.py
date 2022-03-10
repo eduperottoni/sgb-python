@@ -77,7 +77,7 @@ def employees_create_auth():
     return redirect('/employees')
   else:
     flash(validation_dict['message'])
-    return redirect(f'/employees/create/{indice}')
+    return redirect(f'/employees/create/{None}')
 
 @app.route('/employees/update/', defaults={'indice':None})
 @app.route('/employees/update/<indice>')

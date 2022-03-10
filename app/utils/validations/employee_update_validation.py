@@ -2,12 +2,13 @@ from classes.db import db
 from classes.person import Employee
 
 def employee_update_validation(user, name, code, cpf, birth_date, password, indice):
+	#validação dos cpf de todos
 	person_type = ["clients", "students"]
-
 	for i in person_type:
 		for person in db.get_people_dict()[i]:
-			if person.get_cpf() == cpf:
-				return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+			if person:
+				if person.get_cpf() == cpf:
+					return {'valid':False,'message':'Esse cpf já está cadastrado :('}
 				
 	employees_list = db.get_people_dict()['employees']
 	if len(employees_list) != 0:
