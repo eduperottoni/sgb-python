@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block clients %}
+  <div class="container padding-top-10">
+    <main>
+      <h1>Autenticação especial</h1>
+      {% set flashed = get_flashed_messages() %} 
+		  {% if flashed %}
+		    {% for m in flashed %}
+		      <div class="span-error">
+		        <p>{{m}}</p>
+		      </div>
+		    {% endfor %}
+		  {% endif %}
+      <br>
+      <h3>Essa operação necessita de autenticação especial</h3>
+      <form action="/employees/special/auth/validation/{{request_type}}/{{indice}}" method="post">
+        <label for="id-employee">
+          User:
+          <input placeholder="Digite o user especial" type="text" name="user" id="user">
+        </label>
+        <label for="password">
+          Senha:
+          <input placeholder="Digite sua senha" type="password" name="password" id="password">
+        </label>
+        <button class="btn btn-blue" type="submit">Fazer autenticação</button>
+      </form>
+    </main>
+
+    <a href="/employees" class="btn-red mtop">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>
+{% endblock %}

@@ -2,6 +2,19 @@ from classes.db import db
 from classes.person import Student, Client
 
 def client_create_validation(name, cpf, birth_date, password, is_student, student_id_card):
+	if is_student == '1':
+		client_type = 'students'
+	else:
+		client_type = 'clients'
+	
+	#validação dos cpf de todos	
+	person_type = ['employees', 'clients', 'students']
+	for i in person_type:
+		for person in db.get_people_dict()[i]:
+			if person:
+				if person.get_cpf() == cpf and i != client_type:
+					return {'valid':False,'message':'Esse cpf já está cadastrado :('}
+				
 	students_list = db.get_people_dict()['students']
 	if len(students_list) != 0:
 		for student in students_list:
@@ -19,7 +32,7 @@ def client_create_validation(name, cpf, birth_date, password, is_student, studen
 					return {'valid':False,'message':'Esse cpf já está cadastrado:('}
 	
 	##estudantes				
-	if is_student == '1':
+	if client_type == 'students':
 		if name == '' or cpf == '' or birth_date == '' or password == '' or student_id_card == '':
 			return{'valid':False, 'message':'Campos vazios :('}
 		

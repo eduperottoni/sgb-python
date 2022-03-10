@@ -5,16 +5,18 @@ from classes.person import Student, Client, Employee
 class DB():
   def __init__(self, books_list=[], user='', username='', usertype='', publishers_list=[]):
     self.user = user
+    self.logged = False
     self.username = username
     self.usertype = usertype
-    self.logged = False
     self.books_list = books_list
     self.publishers_list = publishers_list
     self.people_dict = {'clients': [], 'students': [], 'employees': []}
-  
-  def get_logged(self): return self.logged
+    
+    self.special_auth = {'user': 'admin', 'password': 'admin'}
+
   def get_user(self): return self.user
-  def get_username(self) : return self.username
+  def get_logged(self): return self.logged
+  def get_username(self): return self.username
   def get_usertype(self): return self.usertype
   def get_books_list(self): return self.books_list
   def get_people_dict(self): return self.people_dict
@@ -96,7 +98,7 @@ estudante2 = Student(name='Fernanda',
 
 cliente1 = Client(name='Lisete', 
                   cpf='33333333333', 
-                  birth_date='1972-12-12', 
+             	     birth_date='1972-12-12', 
                   password='abcd#')
                   
 cliente2 = Client(name='Elton', 
