@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block books %}
+  {% if usertype == 'employee' %}
+		<div class="container padding-top-2">
+			<main>
+				<h1>Cadastro de novos clientes</h1>
+				  {% set messages = get_flashed_messages() %} 
+				  {% if messages %}
+				    {% for msn in messages %}
+				      <div class="span-error">
+				        <p>{{msn}}</p>
+				      </div>
+				    {% endfor %}
+				  {% endif %}
+				<form action="/clients/create/auth" method="post">
+					<label for="name">
+				    Nome:
+				    <input placeholder="Digite seu nome" type="text" name="name" id="name">
+				  </label>
+				  <label for="user">
+				    CPF:
+				    <input placeholder="Digite seu CPF" type="text" name="cpf" id="cpf">
+				  </label>
+				  <label for="birth_date">
+				    Data de nascimento:
+				    <input placeholder="Data de nascimento" type="date" name="birth_date" id="birth_date">
+				  </label>
+				  <label for="password">
+				    Senha:
+				    <input placeholder="Digite sua senha" type="password" name="password" id="password">
+				  </label>
+				  <section>
+				  	<label for="student" style="display:flex">
+							<input type="radio" name="client-student" id="student" value="1">Estudante
+						</label>
+						<label for="client" style="display:flex">
+							<input type="radio" name="client-student" id="client" value="2">Cliente normal
+						</label>
+				  </section>
+				  <label for="password">
+				    Número da carteirinha:
+				    <input placeholder="Número carteirinha de estudante" type="number" name="student_id_card" id="student_id_card">
+				  </label>
+				  <button class="btn btn-green" type="submit">Cadastrar cliente</button>
+				</form>
+			</main>
+		</div>
+	{% else %}
+{% endif %}
+
+{% endblock %}
+
+{% block back %}
+  <a class="btn-red mtop mbottom-2" href="/clients">
+    <button class="btn btn-red">Voltar</button>
+  </a>
+{% endblock %}
+

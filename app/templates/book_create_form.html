@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block books %}
+  <div class="container padding-top-2">
+    <main>
+      <h2>Criar livro</h2>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for msn in flashed %}
+          <div class="span-error">
+            <p>{{msn}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <form action="/books/create/validation/{{supergenre}}/{{subgenre_index}}" method="post">
+        <label for="id">
+          Id:
+          <span>(será gerado automaticamente pelo sistema)</span>
+          <input type="text" id="id" name="id" disabled placeholder="Automático">
+        </label>
+        <label for="title">
+          Título:
+          <input type="text" id="title" name="title">
+        </label>
+        <label for="publisher">
+          Editora:
+          <select name="publisher" id="publisher">
+            {% for publisher in publishers %}
+              <option value="{{publisher.get_id()}}">{{publisher.get_corp_name()}}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label for="author">
+          Autor:
+          <input type="text" id="author" name="author">
+        </label>
+        <label for="author">
+          Ano:
+          <input type="number" id="year" name="year">
+        </label>
+        <label for="supergenre">
+          Gênero:
+          <input value="{{supergenres[supergenre]}}" type="text" id="supergenre" name="supergenre" disabled>
+        </label>
+        <label for="subgenre">
+          Sub-gênero:
+          <input value="{{subgenre}}" type="text" id="subgenre" name="subgenre" disabled>
+        </label>
+        <label for="subgenre">
+          Bio:
+          <textarea type="text" id="bio" name="bio"></textarea>
+        </label>
+        <label for="pgs-number">
+          Número de páginas:
+          <input  type="number" id="pgs-number" name="pgs-number">
+        </label>
+        <label for="total-amount">
+          Quantidade total:
+          <input type="number" id="total-amount" name="total-amount">
+        </label>
+        <label for="leased-amount">
+          Quantidade alugada:
+          <span>(Valor inicial obrigatório)</span>
+          <input value="0" type="text" id="leased-amount" name="leased-amount"disabled>
+        </label>
+        <label for="available-amount">
+          Quantidade disponível:
+          <span>(será gerado automaticamente pelo sistema)</span>
+          <input value="Automático" type="text" id="available-amount" name="available-amount"disabled>
+        </label>
+        <button type="submit" class="btn btn-green">Criar livro</button>
+      </form>
+    </main>
+
+    <a class="btn-red mtop-2" href="/books/create/{{supergenre}}">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>
+{% endblock %}

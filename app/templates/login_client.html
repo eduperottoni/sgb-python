@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SGB | Login Cliente</title>
+
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/templates.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/form.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+
+</head>
+<body>
+  <div class="container padding-top-10">
+    <main>
+      <h1>Login de Cliente</h1>
+        {% set messages = get_flashed_messages() %} 
+        {% if messages %}
+          {% for msn in messages %}
+            <div class="span-error">
+              <p>{{msn}}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
+      <form action="/auth/client" method="post">
+        <label for="user">
+          CPF:
+          <input placeholder="Digite seu CPF" type="text" name="user" id="user">
+        </label>
+        <label for="password">
+          Senha:
+          <input placeholder="Digite sua senha" type="password" name="password" id="password">
+        </label>
+        <button class="btn btn-green" type="submit">Fazer login</button>
+      </form>
+    </main>
+    <h3>Para se cadastrar, procure um funcionário</h3>
+    <a href="/login" class="btn-red mtop">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>
+</body>
+</html>
+</html>
+
+

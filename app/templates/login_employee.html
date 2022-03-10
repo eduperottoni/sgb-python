@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>SGB | Login Funcionário</title>
+
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/templates.css')}}">
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/form.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+
+</head>
+<body>
+  <div class="container padding-top-10">
+    <main>
+      <h1>Login de Funcionário</h1>
+        {% set flashed = get_flashed_messages() %} 
+        {% if flashed %}
+          {% for msn in flashed %}
+            <div class="span-error">
+              <p>{{msn}}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
+      <form action="/auth/employee" method="post">
+        <label for="id-employee">
+          ID Funcionário:
+          <input placeholder="Digite seu ID de funcionário" type="text" name="id-employee" id="id-employee">
+        </label>
+        <label for="password">
+          Senha:
+          <input placeholder="Digite sua senha" type="password" name="password" id="password">
+        </label>
+        <button class="btn btn-green" type="submit">Fazer login</button>
+      </form>
+    </main>
+
+    <a href="/login" class="btn-red mtop">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>
+</body>
+</html>
+</html>

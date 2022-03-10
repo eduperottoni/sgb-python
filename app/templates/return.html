@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block clients %}
+  <div class="container padding-top-5">
+    <main>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for m in flashed %}
+          <div class="span-error">
+            <p>{{m}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <h2>Você realmente deseja devolver o livro {{book.get_title()}}?</h2>
+      <a class='btn-green' href="/return/validation/{{book.get_id()}}">
+        <button class="btn btn-green">Devolver</button>
+      </a>
+      <a class="btn-red" href="/return">
+        <button class="btn btn-red">Cancelar</button>
+      </a>
+    </main>
+  </div>
+{% endblock %}

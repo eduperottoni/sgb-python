@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block books %}
+  <div class="container padding-top-2">
+    <main>
+      <h2>Escolha o gênero do livro</h2>
+      <span>(O gênero não poderá ser modificado após a criação)</span>
+      {% for key, value in supergenres.items() %}
+        <a class='btn-blue' href="/books/create/{{key}}">
+          <button class="btn btn-blue">{{value}}</button>
+        </a>
+      {% endfor %}
+    </main>
+
+    <a class="btn-red mtop-2" href="/books">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block clients %}
+  <main class="books-list" style="padding-top: 2rem">
+    <section class="books-theme">
+      <h2>Livros alugados por {{user.get_name()}}</h2>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for m in flashed %}
+          <div class="span-success">
+            <p>{{m}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <div class="books">
+        {% if user.get_rented() %}
+          {% for book in user.get_rented() %}
+            <div class="book">
+              <h2 class="book-title">{{book.get_title()}}</h2>
+              <hr>
+              <h4 class="book-publisher"> Editora: {{book.get_publisher().get_corp_name()}}</h4>
+              <hr>
+              <h4 class="book-author">Autor: {{book.get_author()}}</h4>
+              <hr>
+              <h4 class="book-leased">Alugados: {{book.get_leased_amount()}}</h4>
+              <hr>
+              <h4 class="book-available">Disponíveis: {{book.get_available_amount()}}</h4>
+              <h4></h4>
+              <article class="book-bio">{{book.get_bio()}}</article>
+              <a href="/return/{{book.get_id()}}" class="mtop-2 btn-yellow">
+                <button class="btn btn-yellow">Devolver</button>
+              </a>
+            </div>
+          {% endfor %}
+        {% else %}
+          <h4>Você ainda não alugou livros!</h4>
+        {% endif %}
+      </div>
+    </section>
+    <a clas="btn-red mtop-2" href="/books">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </main>
+  
+{% endblock %}

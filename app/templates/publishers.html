@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block publishers %}
+  <main class="books-list">
+    <a href="/publishers/create" class="btn-blue mtop-2">
+      <button class="btn btn-blue">Criar editora</button>
+    </a>
+    <section class="books-theme">
+      <h2>Editoras cadastradas</h2>
+      {% set flashed = get_flashed_messages() %} 
+      {% if flashed %}
+        {% for msn in flashed %}
+          <div class="span-success">
+            <p>{{msn}}</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+      <div class="books">
+      {% for publisher in publishers_list %}
+        {% if publisher %}
+          <div class="book">
+            <h2 class="book-title">{{publisher.get_corp_name()}}</h2>
+            <hr>
+            <h4 class="book-author">Telefone: {{publisher.get_phone()}}</h4>
+            <hr>
+            <a href="/publishers/update/{{publisher.get_id()}}" class="mtop-2 btn-yellow">
+              <button class="btn btn-yellow">Alterar</button>
+            </a>
+            <a href="/publishers/delete/{{publisher.get_id()}}" class="btn-red">
+              <button class="btn btn-red">Deletar</button>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+      </div>
+  </main>
+{% endblock %}

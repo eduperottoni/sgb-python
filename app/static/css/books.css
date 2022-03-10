@@ -1,0 +1,72 @@
+body > h1,
+section > h2{
+  display: block;
+  text-align:center;
+  margin:0 0 2rem;
+}
+
+main.books-list{
+  margin: 0 auto;
+}
+
+div.books{
+  padding:1rem;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:1rem;
+  max-width: 1200px;
+}
+
+div.book{
+  /* min-width: 250px; */
+  background: #055ed3d0;
+  box-shadow: 0 0 10px #4393fb;
+  padding: 0.5rem;
+  border-radius:0.8rem;
+  display: flex;
+  flex-flow: nowrap column;
+  word-wrap: break-word;
+  gap:.5rem;
+}
+
+div.book{
+  background:#4d99fde8;
+}
+
+div.book{
+  background:rgb(95, 196, 255);
+  border: 2px solid #4d99fde8;
+}
+
+div.book{
+  background:rgba(179, 227, 255, 0.521);
+  border: 2px solid #4d99fde8;
+}
+
+
+
+div.book h2{
+  min-height: 64px;
+}
+
+div.book hr{
+  background:#4393fbee;
+  height: 2px;
+  width:50%;
+  margin: 0 auto;
+  border:none;
+}
+
+@media (max-width:840px){
+  div.books{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width:600px){
+  div.books{
+    grid-template-columns: 1fr;
+  }
+  
+}
+

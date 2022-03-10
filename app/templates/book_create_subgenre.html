@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block books %}
+  <div class="container padding-top-2">
+    <main>
+      <h1>Gênero: {{supergenre}}</h1>
+      <h2>Escolha o sub-gênero do livro</h2>
+      <span>(O sub-gênero não poderá ser modificado após a criação)</span>
+      {% for subgenre in subgenres %}
+        <a class='btn-blue' href="/books/create/{{supergenre}}/{{subgenres.index(subgenre)}}">
+          <button class="btn btn-blue">{{subgenre}}</button>
+        </a>
+      {% endfor %}
+    </main>
+
+    <a class="btn-red mtop-2" href="/books/create">
+      <button class="btn btn-red">Voltar</button>
+    </a>
+  </div>  
+{% endblock %}

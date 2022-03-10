@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block clients %}
+  {% if usertype == 'employee' %}
+    <nav>
+      <a class="btn-blue mtop-2 mbottom-2" href="/clients/create">
+        <button class="btn btn-blue">Criar Cliente</button>
+      </a>
+    </nav>
+    <main class="books-list">
+      <section class="books-theme">
+        <h2>Clientes cadastrados no sistema</h2>
+        {% set messages = get_flashed_messages() %} 
+				  {% if messages %}
+				    {% for msn in messages %}
+				      <div class="span-success">
+				        <p>{{msn}}</p>
+				      </div>
+				    {% endfor %}
+				  {% endif %}
+        <div class="books">
+          {% for i in people_dict['clients'] %}
+            {% if i %}
+              <div class="book">
+                <h2 class="person-name">Nome: {{i.get_name()}}</h2>
+                <br>
+                <h4 class="person-cpf">CPF: {{i.get_cpf()}}</h4>
+                <hr>
+                <h4>Livros alugados: </h4>
+                {% for j in i.get_rented() %}
+                  <article class="rented">{{j.get_title()}}</article>
+                {% endfor %}
+                <hr>
+                <a href="/clients/update/clients/{{people_dict['clients'].index(i)}}">
+                  <button class="btn btn-yellow">Atualizar</button>
+                </a>
+                <a href="/clients/delete/clients/{{people_dict['clients'].index(i)}}">
+                  <button class="btn btn-red">Excluir</button>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+          {% for student in people_dict['students'] %}
+            {% if student %}
+              <div class="book">
+                <h2 class="person-name">Nome: {{student.get_name()}}</h2>
+                <h3>Estudante</h3>
+                <hr>
+                <h4 class="person-cpf">CPF: {{student.get_cpf()}}</h4>
+                <hr>
+                <h4>Livros alugados: </h4>
+                {% for book in student.get_rented()%}
+                  <article class="rented">{{book.get_title()}}</article>
+                {% endfor %}
+                <hr>
+                <a href="/clients/update/students/{{people_dict['students'].index(student)}}">
+                  <button class="btn btn-yellow">Atualizar</button>
+                </a>
+                <a href="/clients/delete/students/{{people_dict['students'].index(student)}}">
+                  <button class="btn btn-red">Excluir</button>
+                </a>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </section>
+    </main>  
+  {% else %}
+  {% endif %}
+
+{% endblock %}
+
+{% block back %}
+  <a class="btn-red mtop mbottom-2" href="/main">
+    <button class="btn btn-red">Voltar</button>
+  </a>
+{% endblock %}
