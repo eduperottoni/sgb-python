@@ -168,7 +168,7 @@ def books_update_validation(book_id):
 @app.route('/books/delete/<book_id>')
 def books_delete(book_id):
   if db.get_logged():
-    if book_id == None or int(book_id) > len(db.get_publishers_list())-1 :
+    if book_id == None or int(book_id) > len(db.get_books_list())-1 :
       return redirect('/books')
     else:
       book = db.get_book_from_list(int(book_id))
@@ -186,7 +186,7 @@ def books_delete_validation(book_id):
   validation_dict = book_delete_validation(book)
   while validation_dict['valid'] == False:
     flash(validation_dict['message'])
-    return redirect(f'/book/delete/{book_id}')
+    return redirect(f'/books/delete/{book_id}')
   else:
     delete_book(int(book_id))
     flash(validation_dict['message'])
