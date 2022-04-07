@@ -1,0 +1,58 @@
+from app import app
+from flask import render_template, request, flash, redirect
+from classes.db import db
+from classes.book import supergenres, subgenres
+
+from app.utils.genres.subgenre_create_validation import subgenre_create_validation
+from app.utils.validations.supergenre_create_validation import supergenre_create_validation
+from app.utils.creations.create_supergenre_subgenre import create_supergenre, create_subgenre
+
+@app.route('/supergenre/create')
+def supergenre_create():
+  if db.get_logged():
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('supergenre_create.html', supergenres=supergenres, subgenres=subgenres, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
+
+@app.route('/supergenre/create/validation', methods=['POST'])
+def supergenre_create_validation():
+  if db.get_logged():
+    supergenre = request.form.get('supergenre').title()
+    subgenre = request.form.get('subgenre').title()
+    validation_dict = supergenre_create_validation(supergenre, subgenre)
+    while validation_dict['valid'] == False:
+      flash(validation_dict['message'])
+      return redirect('/supergenre/create')
+    else:
+      create_supergenre(supergenre, subgenre)
+      flash(validation_dict['message'])
+      return redirect('/books')
+  else:
+    return redirect('/')
+
+@app.route('/subgenre/create')
+def subgenre_create():
+  if db.get_logged():
+      usertype = db.get_usertype()
+      user = db.get_user()
+      return render_template('subgenre_create.html', supergenres=supergenres, subgenres=subgenres, usertype=usertype, user=user)
+  else:
+    return redirect('/index')
+
+@app.route('/subgenre/create/validation', methods=['POST'])
+def subgenre_create_validation():
+    if db.get_logged():
+        supergenre = request.form.get('supergenre')
+        subgenre = request.form.get('subgenre').title()
+        validation_dict = subgenre_create_validation(subgenre)
+        while validation_dict['valid'] == False:
+            flash(validation_dict['message'])
+            return redirect('/subgenre/create')
+        else:
+            create_subgenre(supergenre, subgenre)
+            flash(validation_dict['message'])
+            return redirect('/books')
+    else:
+        return redirect('/')
